@@ -755,12 +755,12 @@
 		}
 
 		.stack:hover .cue {
-			background: var(--ink);
-			color: rgba(252, 252, 250, .8)
+			background: rgba(235, 234, 228, .96);
+			color: var(--ink-2)
 		}
 
 		.stack:hover .cue b {
-			color: var(--paper)
+			color: var(--ink)
 		}
 
 		.stack:hover .cue::after {
@@ -966,10 +966,6 @@
 			align-items: baseline;
 			gap: 12px;
 			flex-wrap: wrap
-		}
-
-		.lb-price .price {
-			font-size: 14px
 		}
 
 		.lb-status {
@@ -1318,7 +1314,7 @@
 			gap: 20px
 		}
 
-		.statement p {
+		.statement p:not(.eyebrow) {
 			color: var(--ink-2);
 			font-size: clamp(16px, .4vw + 15px, 18.5px)
 		}
@@ -1425,6 +1421,10 @@
 			color: var(--ink-2)
 		}
 
+		.contact-block p .nw {
+			white-space: nowrap
+		}
+
 		.colophon {
 			display: flex;
 			justify-content: space-between;
@@ -1487,17 +1487,15 @@
 				grid-template-columns: repeat(2, 1fr)
 			}
 
-			#intro .wrap,
 			#arc .wrap,
 			#workshop .wrap {
 				grid-template-columns: 1fr;
 				gap: 34px
 			}
 
-			.hero-photo {
-				order: -1;
-				max-width: 330px;
-				aspect-ratio: 4/5
+			#intro .wrap {
+				grid-template-columns: 1.3fr .7fr;
+				gap: clamp(20px, 3.5vw, 34px)
 			}
 
 			.focus-photo {
@@ -1549,6 +1547,10 @@
 			.dl dd {
 				padding-top: 3px;
 				border-top: 0
+			}
+
+			#intro .wrap {
+				grid-template-columns: 1fr
 			}
 
 			.hero-photo {
@@ -2101,7 +2103,7 @@
 						</button>
 						<div class="piece-meta">
 							<div class="piece-row">
-								<h3>The Arc</h3><span class="price">€240–290</span>
+								<h3>The Arc</h3>
 							</div>
 							<p class="piece-desc">Table lamp. Weathered branch, bark-edged log slice, hemp rope.</p>
 							<p class="dims">420–480 mm · built to the branch</p>
@@ -2115,7 +2117,7 @@
 						</button>
 						<div class="piece-meta">
 							<div class="piece-row">
-								<h3>The Trumpet</h3><span class="price">€340</span>
+								<h3>The Trumpet</h3>
 							</div>
 							<p class="piece-desc">Table lamp. A retired B-flat trumpet stood on its bell, pleated drum
 								shade.</p>
@@ -2146,7 +2148,7 @@
 						</button>
 						<div class="piece-meta">
 							<div class="piece-row">
-								<h3>Insulator</h3><span class="price"><s>€180</s> · Sold</span>
+								<h3>Insulator</h3><span class="price">Sold</span>
 							</div>
 							<p class="piece-desc">Pendant. 1950s telegraph-line glass, walnut cap, braided flex.</p>
 							<p class="dims">Ø90 × 110 mm · a twin can be made</p>
@@ -2176,7 +2178,7 @@
 						</button>
 						<div class="piece-meta">
 							<div class="piece-row">
-								<h3>Sextant</h3><span class="price">€320</span>
+								<h3>Sextant</h3>
 							</div>
 							<p class="piece-desc">Desk lamp. Brass sextant arc, vernier scale intact, oak foot.</p>
 							<p class="dims">460 × 240 mm · in the studio</p>
@@ -2307,7 +2309,7 @@
 						</div>
 						<div class="piece-meta">
 							<div class="piece-row">
-								<h3>Piston No. 4</h3><span class="price">€290</span>
+								<h3>Piston No. 4</h3>
 							</div>
 							<p class="piece-desc">Desk lamp. Dacia 1300 piston, hand-bent brass arm, opal half-dome.</p>
 							<p class="dims">410 × 180 mm · 4 weeks</p>
@@ -2331,7 +2333,7 @@
 						</div>
 						<div class="piece-meta">
 							<div class="piece-row">
-								<h3>Bezel &rsquo;74</h3><span class="price">€260</span>
+								<h3>Bezel &rsquo;74</h3>
 							</div>
 							<p class="piece-desc">Wall sconce. Headlamp ring off a Dacia 1300, sandblasted opal glass.
 							</p>
@@ -2359,7 +2361,7 @@
 						</div>
 						<div class="piece-meta">
 							<div class="piece-row">
-								<h3>Spindle</h3><span class="price">€390</span>
+								<h3>Spindle</h3>
 							</div>
 							<p class="piece-desc">Pendant. Tractor gearbox wheel, walnut cone turned to the tooth pitch.
 							</p>
@@ -2377,7 +2379,7 @@
 			<div class="wrap">
 				<div class="head">
 					<p class="eyebrow rv">How a lamp happens</p>
-					<h2 class="rv" style="--d:1">Nine months of waiting,<br>two weeks of work.</h2>
+					<h2 class="rv" style="--d:1">Months of waiting,<br>two weeks of work.</h2>
 					<p class="lede rv" style="--d:2">The order matters. Skip the drying and the wood splits around the
 						socket a year later, in someone's living room.</p>
 				</div>
@@ -2401,7 +2403,7 @@
 					<div class="step rv" style="--d:3"><span class="num">03</span>
 						<div class="step-body">
 							<h3>The base</h3>
-							<p>A slice off a fallen trunk, 40 mm thick, bark left on the edge. Flattened by hand until
+							<p>A slice off a fallen trunk, bark left on the edge. Flattened by hand until
 								it sits on a table without a single rock.</p><span class="when">Half a day</span>
 						</div>
 					</div>
@@ -2424,7 +2426,7 @@
 					<div class="step rv" style="--d:3"><span class="num">06</span>
 						<div class="step-body">
 							<h3>Finish</h3>
-							<p>Three coats of hardwax oil, 24 hours between, cut back with 400 grit. No stain, ever.
+							<p>Three coats of hardwax oil, 24 hours between, cut back with sandpaper. No stain, ever.
 								That honey colour is the wood and the oil, nothing else.</p><span class="when">4
 								days</span>
 						</div>
@@ -2488,7 +2490,7 @@
 				<div class="head">
 					<p class="eyebrow rv">Commissions</p>
 					<h2 class="rv" style="--d:1">Bring me the object.</h2>
-					<p class="lede rv" style="--d:2">A grandfather's tool, a part off the car you sold, a branch you
+					<p class="lede rv" style="--d:2">A grandfather's tool, a part off a car, a branch you
 						carried home from a holiday. It works best when the material already means something.</p>
 				</div>
 				<div class="steps" style="grid-template-columns:repeat(3,1fr)">
@@ -2535,9 +2537,9 @@
 				<div class="contact-grid">
 					<div class="contact-block rv" style="--d:1">
 						<span class="mono-xs">Write</span>
-						<a href="mailto:hello@lightandmatter.studio">hello@lightandmatter.studio</a>
-						<a href="tel:+40000000000">+40 000 000 000</a>
-						<p>Answered within two days, usually in the evening.</p>
+						<a href="mailto:me@cristiangabriel.dev">me@cristiangabriel.dev</a>
+						<!-- <a href="tel:+40000000000">+40 000 000 000</a> -->
+						<p>Answered within two days, <span class="nw">usually in the evening.</span></p>
 					</div>
 				</div>
 				<div class="bigmark rv" style="--d:1">LIGHT <span class="amp">&amp;</span> MATTER</div>
@@ -2558,7 +2560,7 @@
 			<div class="lb-info">
 				<p class="eyebrow" id="lb-no"></p>
 				<h2 id="lb-title"></h2>
-				<div class="lb-price"><span class="price" id="lb-price"></span><span class="lb-status"
+				<div class="lb-price"><span class="lb-status"
 						id="lb-status"></span></div>
 				<p class="lb-desc" id="lb-desc"></p>
 				<dl class="dl lb-specs" id="lb-specs"></dl>
@@ -2819,7 +2821,7 @@
 			// Each piece's photographs, in order. To add one, add a line; a line without a src shows the drawing.
 			var PIECES = {
 				arc: {
-					no: '01', name: 'The Arc', price: '€240–290', status: 'Built to the branch · 3–5 weeks', more: '#arc',
+					no: '01', name: 'The Arc', status: 'Built to the branch · 3–5 weeks', more: '#arc',
 					desc: 'A weathered hardwood branch, cured nine months, set in a blind mortise in a bark-edged log slice. The hemp rope carries the flex from socket to base.',
 					specs: [['Height', '420–480 mm'], ['Socket', 'Brass E27, key switch'], ['Bulb', '4 W filament · 2700 K']],
 					photos: [
@@ -2830,7 +2832,7 @@
 					]
 				},
 				trumpet: {
-					no: '02', name: 'The Trumpet', price: '€340', status: 'One of one · in the studio',
+					no: '02', name: 'The Trumpet', status: 'One of one · in the studio',
 					desc: 'A B-flat trumpet retired from a brass band, stood on its bell in a turned wooden plinth. The valves still move; the flex runs up the leadpipe to a pleated drum shade.',
 					specs: [['Height', 'approx. 800 mm'], ['Shade', 'Pleated drum, Ø 400 mm'], ['Bulb', '6 W filament · 2700 K']],
 					photos: [
@@ -2840,7 +2842,7 @@
 					]
 				},
 				insulator: {
-					no: '03', name: 'Insulator', price: '<s>€180</s>', status: 'Sold · a similar one can be made', sold: true,
+					no: '03', name: 'Insulator', status: 'Sold · a similar one can be made', sold: true,
 					desc: 'A green-glass telegraph insulator off a 1950s line pole, capped in walnut and hung on braided flex.',
 					specs: [['Glass', 'Ø 90 × 110 mm'], ['Drop', 'Up to 1.5 m'], ['Bulb', '2 W filament globe']],
 					photos: [
@@ -2850,7 +2852,7 @@
 					]
 				},
 				sextant: {
-					no: '04', name: 'Sextant', price: '€320', status: 'Available · in the studio',
+					no: '04', name: 'Sextant', status: 'Available · in the studio',
 					desc: 'The brass arc of a ship’s sextant, the vernier scale still engraved, bent into a reading-lamp arm over an oak foot.',
 					specs: [['Size', '460 × 240 mm'], ['Shade', 'Spun steel cone'], ['Bulb', '4 W filament · 2700 K']],
 					photos: [
@@ -2965,7 +2967,6 @@
 
 				document.getElementById('lb-no').textContent = t('The collection · ') + p.no + ' / ' + String(Object.keys(PIECES).length).padStart(2, '0');
 				document.getElementById('lb-title').textContent = t(p.name);
-				document.getElementById('lb-price').innerHTML = p.price;
 				var st = document.getElementById('lb-status');
 				st.textContent = t(p.status); st.classList.toggle('sold', !!p.sold);
 				document.getElementById('lb-desc').textContent = t(p.desc);
@@ -3094,7 +3095,6 @@
 				'Drawing of the Insulator pendant': 'Desenul lustrei Izolatorul',
 				'Sold': 'Vândut',
 				'Insulator': 'Izolatorul',
-				'<s>€180</s> · Sold': '<s>€180</s> · Vândut',
 				'Pendant. 1950s telegraph-line glass, walnut cap, braided flex.': 'Lustră. Sticlă de pe o linie de telegraf din anii ’50, capac din nuc, cablu textil împletit.',
 				'Ø90 × 110 mm · a twin can be made': 'Ø90 × 110 mm · se poate face unul asemănător',
 				'Sextant · open 3 drawings': 'Sextantul · deschide 3 desene',
@@ -3160,7 +3160,7 @@
 
 				// 06 process
 				'How a lamp happens': 'Cum se naște o lampă',
-				'Nine months of waiting,<br>two weeks of work.': 'Nouă luni de așteptare,<br>două săptămâni de lucru.',
+				'Months of waiting,<br>two weeks of work.': 'Luni de așteptare,<br>două săptămâni de lucru.',
 				'The order matters. Skip the drying and the wood splits around the socket a year later, in someone\'s living room.': 'Ordinea contează. Sari peste uscare și lemnul crapă în jurul duliei un an mai târziu, în sufrageria cuiva.',
 				'Finding': 'Căutarea',
 				'Walked after storms, along water and woodlot edges. Only what is already dead and loose. Most of what I pick up goes back.': 'Plimbări după furtuni, pe lângă ape și la marginea pădurilor. Doar ce e deja uscat și desprins. Cea mai mare parte din ce ridic pun la loc.',
@@ -3169,7 +3169,7 @@
 				'Washed, bark taken back to the hard wood underneath, then stacked in an open shed with air on all four sides. No kiln: kiln-dried branch wood checks along the grain.': 'Spălat, cojit până la lemnul tare de dedesubt, apoi stivuit într-un șopron deschis, cu aer din toate cele patru părți. Fără cuptor: crengile uscate în cuptor crapă de-a lungul fibrei.',
 				'6 – 9 months': '6 – 9 luni',
 				'The base': 'Baza',
-				'A slice off a fallen trunk, 40 mm thick, bark left on the edge. Flattened by hand until it sits on a table without a single rock.': 'O felie groasă de 40 mm dintr-un trunchi căzut, cu scoarța lăsată pe margine. Îndreptată manual până stă pe masă fără să se clatine deloc.',
+				'A slice off a fallen trunk, bark left on the edge. Flattened by hand until it sits on a table without a single rock.': 'O felie dintr-un trunchi căzut, cu scoarța lăsată pe margine. Îndreptată manual până stă pe masă fără să se clatine deloc.',
 				'Half a day': 'O jumătate de zi',
 				'Fitting': 'Montajul',
 				'The branch decides where the socket goes, not the drawing. Blind mortise into the base, brass E27 with a key switch, nothing structural held by glue.': 'Creanga hotărăște unde merge dulia, nu desenul. Lăcaș orb în bază, E27 din alamă cu comutator rotativ, nimic din structură nu e ținut în lipici.',
@@ -3178,7 +3178,7 @@
 				'Hemp rope spiralled from socket to base with the flex inside it. Strain relief at both ends, then continuity- and insulation-tested before it leaves.': 'Frânghie de cânepă înfășurată în spirală de la dulie la bază, cu cablul în interior. Protecție la smulgere la ambele capete, apoi test de continuitate și de izolație înainte să plece.',
 				'Half a day · tested by an authorized electrician': 'O jumătate de zi · testat de un electrician autorizat',
 				'Finish': 'Finisajul',
-				'Three coats of hardwax oil, 24 hours between, cut back with 400 grit. No stain, ever. That honey colour is the wood and the oil, nothing else.': 'Trei straturi de ulei cu ceară dură, la 24 de ore distanță, șlefuite cu granulație 400. Niciodată baiț. Culoarea aceea de miere e lemnul și uleiul, nimic altceva.',
+				'Three coats of hardwax oil, 24 hours between, cut back with sandpaper. No stain, ever. That honey colour is the wood and the oil, nothing else.': 'Trei straturi de ulei cu ceară dură, la 24 de ore distanță, șlefuite cu glaspapir. Niciodată baiț. Culoarea aceea de miere e lemnul și uleiul, nimic altceva.',
 				'4 days': '4 zile',
 
 				// 07 workshop
@@ -3201,7 +3201,7 @@
 				// 08 commissions
 				'Commissions': 'Comenzi',
 				'Bring me the object.': 'Adu-mi obiectul.',
-				'A grandfather\'s tool, a part off the car you sold, a branch you carried home from a holiday. It works best when the material already means something.': 'O unealtă a bunicului, o piesă de la mașina pe care ai vândut-o, o creangă adusă acasă dintr-o vacanță. Iese cel mai bine când materialul înseamnă deja ceva.',
+				'A grandfather\'s tool, a part off a car, a branch you carried home from a holiday. It works best when the material already means something.': 'O unealtă a bunicului, o piesă de la o mașină, o creangă adusă acasă dintr-o vacanță. Iese cel mai bine când materialul înseamnă deja ceva.',
 				'Send a photo': 'Trimite o fotografie',
 				'The object, or the corner of the room it has to light. Shelf depth and a rough sense of how dark you want it is enough to start.': 'Obiectul sau colțul camerei pe care trebuie să-l lumineze. Adâncimea raftului și o idee aproximativă despre cât de întunecat vrei să rămână ajung ca să începem.',
 				'Reply within 2 days': 'Răspuns în 2 zile',
@@ -3215,7 +3215,7 @@
 				// 09 contact
 				'The bench is outside,<br>under the walnut.': 'Bancul de lucru e afară,<br>sub nuc.',
 				'Write': 'Scrie-mi',
-				'Answered within two days, usually in the evening.': 'Răspund în două zile, de obicei seara.',
+				'Answered within two days, <span class="nw">usually in the evening.</span>': 'Răspund în două zile, <span class="nw">de obicei seara.</span>',
 				'Handmade lighting · found wood, brass, salvage · est. 2019': 'Lămpi lucrate manual · lemn găsit, alamă, recuperări · din 2019',
 				'All pieces one of one · © 2026': 'Toate piesele sunt unicat · © 2026',
 

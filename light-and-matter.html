@@ -622,6 +622,7 @@
 			overflow: hidden;
 			background: var(--panel);
 			transform-origin: 50% 100%;
+			pointer-events: none;
 			transition: transform .75s var(--ease), filter .75s var(--ease), box-shadow .75s var(--ease)
 		}
 
@@ -653,19 +654,19 @@
 
 		.stack:hover .s0,
 		.stack:focus-visible .s0 {
-			transform: rotate(-2.4deg) translate(-3%, -1.5%);
+			transform: rotate(-1.8deg) translate(-2%, -1.5%);
 			box-shadow: 0 2px 4px rgba(20, 24, 26, .06), 0 26px 44px -22px rgba(20, 24, 26, .55)
 		}
 
 		.stack:hover .s1,
 		.stack:focus-visible .s1 {
-			transform: rotate(3.4deg) translate(7%, -3%) scale(.97);
+			transform: rotate(2.4deg) translate(2%, -3%) scale(.97);
 			filter: brightness(.96) saturate(.95)
 		}
 
 		.stack:hover .s2,
 		.stack:focus-visible .s2 {
-			transform: rotate(8deg) translate(14%, -5%) scale(.95);
+			transform: rotate(4.2deg) translate(2.5%, -4.5%) scale(.95);
 			filter: brightness(.9) saturate(.9)
 		}
 
@@ -2057,7 +2058,7 @@
 					<p class="hero-sub hero-el" style="--d:2">Every lamp starts as something already finished: a branch
 						the water bleached for a decade, a slice off a fallen walnut, now and then a piston or a
 						headlamp bezel that stopped being useful in 1974. I dry it, cut it, polish it, protect it with
-						special laquer, and wire it myself as an authorized electrician.</p>
+						special lacquer, and wire it myself as an authorized electrician.</p>
 					<div class="actions hero-el" style="--d:3">
 						<a class="btn" href="#collection">See the work</a>
 						<a class="btn ghost" href="#commissions">Commission a piece</a>
@@ -2448,10 +2449,6 @@
 						<dd>2019</dd>
 					</div>
 					<div class="fact">
-						<dt>Pieces a year</dt>
-						<dd>~30</dd>
-					</div>
-					<div class="fact">
 						<dt>Identical pieces made</dt>
 						<dd>0</dd>
 					</div>
@@ -2465,7 +2462,7 @@
 					</div>
 					<div class="fact">
 						<dt>Electrical</dt>
-						<dd>230 V · E27</dd>
+						<dd>230 V · 12 V · LED · E27 · E14</dd>
 					</div>
 					<div class="fact">
 						<dt>Ships</dt>
@@ -3037,9 +3034,9 @@
 
 				// 01 intro
 				'Light &amp; Matter · handmade lighting, one of one': 'Light &amp; Matter · lămpi lucrate manual, unicat',
-				'One branch.<br>One log.<br>One bulb.': 'O creangă.<br>Un buștean.<br>Un bec.',
-				'Every lamp starts as something already finished: a branch the water bleached for a decade, a slice off a fallen walnut, now and then a piston or a headlamp bezel that stopped being useful in 1974. I dry it, cut it, wrap the flex in hemp rope, wire it myself (I\'m an authorized electrician) and give it a filament.':
-					'Fiecare lampă pornește de la ceva care și-a încheiat deja viața: o creangă albită de apă vreme de un deceniu, o felie dintr-un nuc căzut, uneori un piston sau o ramă de far care nu mai folosea nimănui din 1974. O usuc, o tai, îmbrac cablul în frânghie de cânepă, fac singur instalația electrică (sunt electrician autorizat) și îi dau un filament.',
+				'Material.<br>Form.<br>Light.': 'Material.<br>Formă.<br>Lumină.',
+				'Every lamp starts as something already finished: a branch the water bleached for a decade, a slice off a fallen walnut, now and then a piston or a headlamp bezel that stopped being useful in 1974. I dry it, cut it, polish it, protect it with special lacquer, and wire it myself as an authorized electrician.':
+					'Fiecare lampă pornește de la ceva care și-a încheiat deja viața: o creangă albită de apă vreme de un deceniu, o felie dintr-un nuc căzut, uneori un piston sau o ramă de far care nu mai folosea nimănui din 1974. O usuc, o tai, o lustruiesc, o protejez cu un lac special și fac singur instalația electrică, ca electrician autorizat.',
 				'See the work': 'Vezi lucrările',
 				'Commission a piece': 'Comandă o piesă',
 				'<span class="key">←</span><span class="key">→</span> to move through the studio': '<span class="key">←</span><span class="key">→</span> ca să te plimbi prin atelier',
@@ -3159,7 +3156,6 @@
 				'The bench is outside, under a walnut, and it stays there until November. That is most of why these lamps look the way they do: the wood is found within a morning\'s walk of where it gets cut, and the first time a finished lamp is switched on, it is switched on in the yard.': 'Bancul de lucru e afară, sub un nuc, și stă acolo până în noiembrie. De aici vine mare parte din felul în care arată lămpile astea: lemnul e găsit la o dimineață de mers pe jos de locul unde e tăiat, iar prima dată când o lampă terminată e aprinsă, e aprinsă în curte.',
 				'I don\'t make series. Two lamps off the same tree will still be two different lamps, and if you ask me for a matching pair I\'ll tell you honestly which one to take. What you get is a signed piece, a written note of where every part of it came from, and someone who will rewire it for you in ten years.': 'Nu fac serii. Două lămpi din același copac tot două lămpi diferite vor fi, iar dacă îmi ceri o pereche asortată îți spun sincer pe care s-o iei. Primești o piesă semnată, o notă scrisă despre proveniența fiecărei părți și pe cineva care îți va reface instalația peste zece ani.',
 				'Working since': 'Lucrez din',
-				'Pieces a year': 'Piese pe an',
 				'Identical pieces made': 'Piese identice făcute',
 				'Lead time on a commission': 'Termen pentru o comandă',
 				'3–5 weeks': '3–5 săptămâni',
@@ -3190,7 +3186,7 @@
 				'Write': 'Scrie-mi',
 				'Answered within two days, usually in the evening.': 'Răspund în două zile, de obicei seara.',
 				'Handmade lighting · found wood, brass, salvage · est. 2019': 'Lămpi lucrate manual · lemn găsit, alamă, recuperări · din 2019',
-				'All pieces one of one · © 2026': 'Toate piesele sunt unicat · Instalație făcută de un electrician autorizat · © 2026',
+				'All pieces one of one · © 2026': 'Toate piesele sunt unicat · © 2026',
 
 				// the photograph deck
 				'Full specification →': 'Specificații complete →',

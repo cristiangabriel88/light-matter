@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Light &amp; Matter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FCFCFA;
+  --panel:#F3F2ED;
+  --panel-2:#EBEAE4;
+  --ink:#14181A;
+  --ink-2:#555D5B;
+  --ink-3:#8B938E;
+  --rule:#E3E5E0;
+  --rule-2:#D2D5CF;
+  --glow:#D8862A;
+  --glow-2:#F7CE83;
+  --wood-1:#E3C89C;
+  --wood-2:#B98F52;
+  --wood-3:#8A6532;
+  --metal-1:#C8CCCD;
+  --metal-2:#8A9196;
+  --rope:#C9B892;
+  --f-display:"Syne","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-body:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gutter:clamp(20px,5vw,64px);
+  --ease:cubic-bezier(.22,.72,.2,1);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:clamp(16px,0.55vw + 14.4px,19px);
+  line-height:1.62;
+  font-weight:300;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+html{scroll-behavior:smooth}
+@media (min-width:820px) and (min-height:620px){
+  html{scroll-snap-type:y proximity}
+  .slide{scroll-snap-align:start}
+}
+img,svg{max-width:100%}
+::selection{background:var(--glow-2);color:var(--ink)}
+
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.022em;text-wrap:balance;margin:0}
+h1{font-size:clamp(38px,7.4vw,86px);line-height:.98;letter-spacing:-.038em}
+h2{font-size:clamp(27px,3.8vw,50px);line-height:1.04}
+h3{font-size:clamp(17px,1.3vw,21px);line-height:1.2;letter-spacing:-.012em}
+p{margin:0}
+a{color:inherit}
+.eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:500;line-height:1.4;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3);margin:0}
+.lede{font-size:clamp(17px,.7vw + 15px,22px);line-height:1.55;color:var(--ink-2);max-width:36ch}
+.mono-xs{font-family:var(--f-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
+em{font-style:italic;color:var(--ink)}
+
+.slide{
+  min-height:100svh;display:flex;align-items:center;
+  padding-block:clamp(84px,10vh,132px);padding-inline:var(--gutter);
+  position:relative;overflow:hidden;
+}
+.wrap{width:100%;max-width:1080px;margin-inline:auto;position:relative;z-index:2}
+
+/* ---------- full-bleed photographic grounds ---------- */
+.bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.bg img{width:100%;height:100%;object-fit:cover;display:block}
+.bg::after{content:"";position:absolute;inset:0}
+#intro .bg img{object-position:58% 62%}
+#intro .bg::after{
+  background:
+    linear-gradient(180deg,var(--paper) 0%,rgba(252,252,250,0) 22%,rgba(252,252,250,0) 76%,var(--paper) 100%),
+    linear-gradient(100deg,rgba(252,252,250,.975) 0%,rgba(252,252,250,.94) 36%,rgba(252,252,250,.66) 60%,rgba(252,252,250,.44) 100%);
+}
+#workshop .bg img{object-position:50% 68%}
+#workshop .bg::after{
+  background:
+    linear-gradient(180deg,var(--paper) 0%,rgba(252,252,250,.9) 30%,rgba(252,252,250,.9) 70%,var(--paper) 100%),
+    linear-gradient(90deg,rgba(252,252,250,.96) 0%,rgba(252,252,250,.86) 55%,rgba(252,252,250,.72) 100%);
+}
+
+/* ---------- fixed chrome ---------- */
+.progress{position:fixed;left:0;right:0;top:env(safe-area-inset-top,0px);height:2px;background:var(--rule);z-index:60}
+.progress span{display:block;height:100%;width:0;background:var(--glow)}
+
+.rail{position:fixed;left:18px;top:0;bottom:0;z-index:55;display:none;flex-direction:column;justify-content:space-between;align-items:center;padding-block:28px;pointer-events:none}
+.rail b,.rail span{writing-mode:vertical-rl;font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-3)}
+.rail span{color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.18em}
+
+.dots{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:55;display:none;flex-direction:column;gap:13px;align-items:flex-end}
+.dots button{-webkit-appearance:none;appearance:none;background:transparent;border:1px solid var(--rule-2);width:9px;height:9px;padding:0;border-radius:99px;cursor:pointer;position:relative;transition:height .45s var(--ease),background .3s,border-color .3s;box-shadow:0 0 0 3px rgba(252,252,250,.55)}
+.dots button:hover{border-color:var(--ink-3)}
+.dots button[aria-current="true"]{height:26px;background:var(--glow);border-color:var(--glow)}
+.dots button::after{content:attr(data-label);position:absolute;right:17px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);white-space:nowrap;background:var(--paper);padding:3px 7px;opacity:0;pointer-events:none;transition:opacity .25s var(--ease)}
+.dots button:hover::after,.dots button:focus-visible::after{opacity:1}
+@media (min-width:860px){.dots{display:flex}}
+@media (min-width:1300px){.rail{display:flex}}
+:where(a,button):focus-visible{outline:2px solid var(--glow);outline-offset:3px;border-radius:2px}
+
+/* ---------- motion ---------- */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .85s var(--ease),transform .85s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
+.rv.in{opacity:1;transform:none}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero-el{animation:rise .95s var(--ease) both;animation-delay:calc(var(--d,0)*110ms)}
+@keyframes breathe{0%,100%{opacity:.82}50%{opacity:1}}
+.lamp-glow{animation:breathe 7s ease-in-out infinite}
+
+/* ---------- hero ---------- */
+#intro .wrap{display:grid;grid-template-columns:1.18fr .82fr;gap:clamp(24px,5vw,72px);align-items:center}
+.hero-copy{display:flex;flex-direction:column;gap:26px;align-items:flex-start}
+.hero-sub{max-width:44ch;color:var(--ink-2);font-size:clamp(16px,.35vw + 15px,18.5px)}
+.hero-photo{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--panel)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:52% 38%;display:block}
+.photo-tag{position:absolute;left:0;bottom:0;background:var(--paper);padding:8px 12px;font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2)}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:13px 20px;border:1px solid var(--ink);color:var(--paper);background:var(--ink);transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease);cursor:pointer}
+.btn:hover{background:var(--glow);border-color:var(--glow);color:#1A1206}
+.btn.ghost{background:rgba(252,252,250,.7);color:var(--ink);border-color:var(--rule-2)}
+.btn.ghost:hover{border-color:var(--ink);background:rgba(252,252,250,.95);color:var(--ink)}
+.hint{display:flex;align-items:center;gap:10px;color:var(--ink-3);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase}
+.key{border:1px solid var(--rule-2);padding:2px 6px;border-radius:3px;font-size:10px;color:var(--ink-2);background:rgba(252,252,250,.7)}
+
+/* ---------- shared blocks ---------- */
+.head{display:flex;flex-direction:column;gap:14px;margin-bottom:clamp(30px,4.6vh,54px)}
+.cols-3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,3.4vw,48px)}
+.mat{display:flex;flex-direction:column;gap:14px;padding-top:18px;border-top:1px solid var(--ink)}
+.mat h3{font-size:clamp(19px,1.5vw,24px)}
+.mat p{color:var(--ink-2);font-size:16.5px}
+.spec-list{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column;gap:7px}
+.spec-list li{font-family:var(--f-mono);font-size:11.5px;line-height:1.5;color:var(--ink-2);display:flex;gap:9px;align-items:baseline}
+.spec-list li::before{content:"";flex:0 0 5px;height:1px;background:var(--rule-2);transform:translateY(-4px)}
+
+/* ---------- gallery ---------- */
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.4vw,18px)}
+.gfig{margin:0;display:flex;flex-direction:column;gap:10px}
+.gfig .shot{height:clamp(240px,27vw,400px);overflow:hidden;background:var(--panel)}
+.gfig img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.1s var(--ease)}
+.gfig:hover img{transform:scale(1.03)}
+.gfig figcaption{display:flex;flex-direction:column;gap:3px}
+.gcap{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
+.gsub{font-size:14px;color:var(--ink-2);line-height:1.4}
+
+/* ---------- focus ---------- */
+#arc .wrap{display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(28px,5vw,72px);align-items:center}
+.focus-photo{aspect-ratio:3/4;overflow:hidden;background:var(--panel)}
+.focus-photo img{width:100%;height:100%;object-fit:cover;object-position:52% 40%;display:block}
+.feature-copy{display:flex;flex-direction:column;gap:22px}
+.dl{display:grid;grid-template-columns:auto 1fr;gap:0 clamp(18px,3vw,40px);margin:0}
+.dl dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);padding:10px 0;border-top:1px solid var(--rule);white-space:nowrap}
+.dl dd{margin:0;padding:10px 0;border-top:1px solid var(--rule);font-size:15.5px;color:var(--ink-2)}
+.dl dd b{font-weight:400;color:var(--ink);font-family:var(--f-mono);font-size:13px;font-variant-numeric:tabular-nums}
+
+/* ---------- workbook (drawings) ---------- */
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.4vw,34px)}
+.piece{display:flex;flex-direction:column}
+.tile{aspect-ratio:4/4.4;width:100%;background:var(--panel);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;transition:background .5s var(--ease)}
+.piece:hover .tile{background:var(--panel-2)}
+.piece:hover .lamp-glow{opacity:1;animation:none}
+.tile svg{width:100%;height:100%;display:block}
+.tile .stamp{position:absolute;top:10px;left:12px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
+.piece-meta{display:flex;flex-direction:column;gap:5px;padding-top:13px;margin-top:13px;border-top:1px solid var(--rule)}
+.piece-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.piece-row h3{font-size:18px}
+.price{font-family:var(--f-mono);font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.piece-desc{font-size:14.5px;color:var(--ink-2);line-height:1.45}
+.dims{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.07em;color:var(--ink-3);text-transform:uppercase}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,44px) clamp(22px,3.4vw,52px)}
+.step{display:grid;grid-template-columns:auto 1fr;gap:0 16px;align-items:start;padding-top:16px;border-top:1px solid var(--rule)}
+.step .num{font-family:var(--f-mono);font-size:11px;font-weight:500;color:var(--glow);letter-spacing:.05em;padding-top:3px;font-variant-numeric:tabular-nums}
+.step-body{display:flex;flex-direction:column;gap:7px}
+.step h3{font-size:17px}
+.step p{font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.step .when{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- workshop ---------- */
+#workshop .wrap{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(28px,5vw,72px);align-items:center}
+.statement{display:flex;flex-direction:column;gap:20px}
+.statement p{color:var(--ink-2);font-size:clamp(16px,.4vw + 15px,18.5px)}
+.facts{display:flex;flex-direction:column;margin:0}
+.fact{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-top:1px solid var(--rule-2)}
+.fact:last-child{border-bottom:1px solid var(--rule-2)}
+.fact dt{font-size:15px;color:var(--ink-2)}
+.fact dd{margin:0;font-family:var(--f-mono);font-size:12.5px;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+
+/* ---------- commissions ---------- */
+.note{margin-top:clamp(26px,4vh,44px);padding:22px 24px;background:var(--panel);display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.note p{font-size:16px;color:var(--ink-2);max-width:56ch}
+.note .mono-xs{white-space:nowrap;padding-top:4px}
+
+/* ---------- contact ---------- */
+#contact{align-items:flex-end}
+#contact .wrap{display:flex;flex-direction:column;gap:clamp(28px,5.5vh,56px)}
+.contact-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:clamp(22px,3.4vw,48px);align-items:start}
+.contact-block{display:flex;flex-direction:column;gap:9px}
+.contact-block a{font-size:16.5px;text-decoration:none;color:var(--ink);background-image:linear-gradient(var(--glow),var(--glow));background-size:0% 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .4s var(--ease);padding-bottom:2px}
+.contact-block a:hover{background-size:100% 1px}
+.contact-block p{font-size:16px;color:var(--ink-2)}
+.colophon{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--rule)}
+.bigmark{font-family:var(--f-display);font-weight:800;letter-spacing:-.045em;font-size:clamp(40px,11.4vw,146px);line-height:.85;color:var(--ink)}
+.bigmark .amp{color:var(--glow)}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .gallery{grid-template-columns:repeat(2,1fr)}
+  .gfig .shot{height:clamp(240px,42vw,360px)}
+}
+@media (max-width:900px){
+  .cols-3,.grid-3,.steps{grid-template-columns:repeat(2,1fr)}
+  #intro .wrap,#arc .wrap,#workshop .wrap{grid-template-columns:1fr;gap:34px}
+  .hero-photo{order:-1;max-width:330px;aspect-ratio:4/5}
+  .focus-photo{max-width:420px;aspect-ratio:4/5}
+  .contact-grid{grid-template-columns:1fr 1fr}
+  #intro .bg::after{background:
+    linear-gradient(180deg,rgba(252,252,250,.92) 0%,rgba(252,252,250,.86) 45%,rgba(252,252,250,.94) 78%,var(--paper) 100%)}
+}
+@media (max-width:620px){
+  .slide{min-height:auto;padding-block:clamp(64px,9vh,90px)}
+  #intro{min-height:100svh}
+  .cols-3,.grid-3,.steps,.contact-grid,.gallery{grid-template-columns:1fr}
+  .grid-3{gap:30px}
+  .dl{grid-template-columns:1fr;gap:0}
+  .dl dt{padding-bottom:0;border-top:1px solid var(--rule)}
+  .dl dd{padding-top:3px;border-top:0}
+  .hero-photo{max-width:250px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;scroll-snap-type:none}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+
+</head>
+<body>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;left:-9999px">
+  <defs>
+    <radialGradient id="g-glow">
+      <stop offset="0" stop-color="#F9D695" stop-opacity=".92"/>
+      <stop offset=".42" stop-color="#D8862A" stop-opacity=".3"/>
+      <stop offset="1" stop-color="#D8862A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="g-wood" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E7D2AC"/>
+      <stop offset=".5" stop-color="#BE9558"/>
+      <stop offset="1" stop-color="#84602F"/>
+    </linearGradient>
+    <linearGradient id="g-metal" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#D5D9DA"/>
+      <stop offset=".42" stop-color="#A9AFB2"/>
+      <stop offset="1" stop-color="#7C8489"/>
+    </linearGradient>
+    <linearGradient id="g-brass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E4C98B"/>
+      <stop offset=".45" stop-color="#C0A05C"/>
+      <stop offset="1" stop-color="#8A7038"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="progress" aria-hidden="true"><span id="bar"></span></div>
+
+<div class="rail" aria-hidden="true">
+  <b>Light &amp; Matter</b>
+  <span id="counter">01 / 09</span>
+</div>
+
+<nav class="dots" id="dots" aria-label="Sections"></nav>
+
+<main>
+
+<!-- 01 ─────────────────────────── INTRO -->
+<section class="slide" id="intro" data-label="Intro">
+  <div class="bg" aria-hidden="true"><img src="assets/bench-sunset.jpg" alt=""></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow hero-el" style="--d:0">Light &amp; Matter — handmade lighting, one of one</p>
+      <h1 class="hero-el" style="--d:1">One branch.<br>One log.<br>One bulb.</h1>
+      <p class="hero-sub hero-el" style="--d:2">Every lamp starts as something already finished: a branch the water bleached for a decade, a slice off a fallen walnut, now and then a piston or a headlamp bezel that stopped being useful in 1974. I dry it, cut it, wrap the flex in hemp rope, wire it to CE spec and give it a filament.</p>
+      <div class="actions hero-el" style="--d:3">
+        <a class="btn" href="#pieces">See the work</a>
+        <a class="btn ghost" href="#commissions">Commission a piece</a>
+      </div>
+      <div class="hint hero-el" style="--d:4">
+        <span class="key">&larr;</span><span class="key">&rarr;</span> to move through the studio
+      </div>
+    </div>
+    <figure class="hero-photo hero-el" style="--d:2;margin:0">
+      <img src="assets/arc-lit.jpg" alt="A branch lamp lit at night, brass socket and bare Edison bulb over a bark-edged log base">
+      <figcaption class="photo-tag">The Arc · 2700 K, after dark</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 02 ─────────────────────────── MATERIALS -->
+<section class="slide" id="materials" data-label="Materials">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow rv">02 — Where it comes from</p>
+      <h2 class="rv" style="--d:1">Three sources,<br>no catalogue.</h2>
+      <p class="lede rv" style="--d:2">Nothing is bought new except the socket, the flex and the oil. Everything else is found, and what it was stays visible.</p>
+    </div>
+    <div class="cols-3">
+      <div class="mat rv" style="--d:1">
+        <h3>Found wood</h3>
+        <p>Gathered by hand along riverbanks and woodlot edges, in the week after storms. Only wood that is already dead and loose — never cut, never taken off anything still living.</p>
+        <ul class="spec-list">
+          <li>Weathered hardwood branch · walnut, oak, plum</li>
+          <li>Bases are slices off a fallen trunk, bark left on</li>
+          <li>Air-dried 6–9 months, no kiln</li>
+          <li>Cracks left open, not resin-poured</li>
+        </ul>
+      </div>
+      <div class="mat rv" style="--d:2">
+        <h3>Repurposed metal</h3>
+        <p>Pulled from scrapyards and farm sheds. Degreased, wire-brushed by hand, then clear-lacquered with the pitting left exactly as found — that surface took forty years to make.</p>
+        <ul class="spec-list">
+          <li>Dacia 1300 pistons, bezels, rocker arms</li>
+          <li>Tractor gearbox spindles · belt pulleys</li>
+          <li>Brass unions, copper brake line</li>
+          <li>Never sandblasted, never chromed</li>
+        </ul>
+      </div>
+      <div class="mat rv" style="--d:3">
+        <h3>Oddities</h3>
+        <p>The drawer everything else lives in. Some of it waits two years for the right piece of wood to turn up, and some of it never gets used at all.</p>
+        <ul class="spec-list">
+          <li>Porcelain fuse holders, 1960s substation</li>
+          <li>Bakelite toggle switches</li>
+          <li>Brass sextant vernier plates</li>
+          <li>Telegraph insulators, lab glass</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 ─────────────────────────── GALLERY -->
+<section class="slide" id="pieces" data-label="The Arc">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow rv">03 — The signature piece</p>
+      <h2 class="rv" style="--d:1">The Arc, four times.</h2>
+      <p class="lede rv" style="--d:2">The same lamp on the bench it was built on, in the garden, on a shelf, and doing the only job it has. No two branches arc the same way, so no two Arcs stand the same way either.</p>
+    </div>
+    <div class="gallery">
+      <figure class="gfig rv" style="--d:1">
+        <div class="shot"><img src="assets/arc-bench.jpg" alt="The lamp on a workbench beside screwdrivers and tape, globe bulb hanging from a brass socket" loading="lazy"></div>
+        <figcaption>
+          <span class="gcap">01 · On the bench</span>
+          <span class="gsub">Finished that afternoon. Globe bulb, hemp rope run the length of the branch.</span>
+        </figcaption>
+      </figure>
+      <figure class="gfig rv" style="--d:2">
+        <div class="shot"><img src="assets/arc-garden.jpg" alt="The lamp outdoors in a garden, the workshop building behind it" loading="lazy"></div>
+        <figcaption>
+          <span class="gcap">02 · In the yard</span>
+          <span class="gsub">Antique-brass socket with a key switch. The branch was dry by May.</span>
+        </figcaption>
+      </figure>
+      <figure class="gfig rv" style="--d:3">
+        <div class="shot"><img src="assets/arc-room.jpg" alt="The lamp indoors on a shelf next to framed pictures, unlit, with an amber Edison bulb" loading="lazy"></div>
+        <figcaption>
+          <span class="gcap">03 · In the room</span>
+          <span class="gsub">ST64 amber bulb. 280 mm of shelf, and it holds the whole corner.</span>
+        </figcaption>
+      </figure>
+      <figure class="gfig rv" style="--d:4">
+        <div class="shot"><img src="assets/arc-lit.jpg" alt="The same lamp at night, the filament lit, throwing warm light across the wall" loading="lazy"></div>
+        <figcaption>
+          <span class="gcap">04 · Lit</span>
+          <span class="gsub">Squirrel-cage filament, 2700 K, dimmed to about half.</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 04 ─────────────────────────── FOCUS -->
+<section class="slide" id="arc" data-label="Specification">
+  <div class="wrap">
+    <figure class="focus-photo rv" style="margin:0">
+      <img src="assets/arc-room.jpg" alt="The Arc photographed indoors in daylight, showing the rope, brass socket and log base" loading="lazy">
+    </figure>
+    <div class="feature-copy">
+      <div class="head" style="margin-bottom:0">
+        <p class="eyebrow rv">04 — Specification</p>
+        <h2 class="rv" style="--d:1">The Arc</h2>
+        <p class="lede rv" style="--d:2">The branch spent nine months drying in a shed before it was stable enough to trust. It sits in a blind mortise cut into the log slice — no bracket, no visible screw. The rope is not decoration: it carries the flex from socket to base, and it is what you take hold of when you move the lamp.</p>
+      </div>
+      <dl class="dl rv" style="--d:3">
+        <dt>Height</dt><dd><b>420–480 mm</b> · base Ø 200–240 mm</dd>
+        <dt>Arm</dt><dd>Weathered hardwood branch, cured 9 months, oiled</dd>
+        <dt>Base</dt><dd>Slice off a fallen trunk, bark left on, felt-footed</dd>
+        <dt>Socket</dt><dd>Brass E27, knurled shell, key switch on the socket</dd>
+        <dt>Bulb</dt><dd><b>4 W</b> filament LED · <b>2700 K</b> · dimmable · included</dd>
+        <dt>Cord</dt><dd>2 m black braided flex in hemp rope, inline switch, CE</dd>
+        <dt>Weight</dt><dd><b>2.1–2.8 kg</b></dd>
+        <dt>Price</dt><dd><b>€240–290</b> — depends on the branch, one of one</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- 05 ─────────────────────────── WORKBOOK -->
+<section class="slide" id="workbook" data-label="Workbook">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow rv">05 — Drawn, not yet built</p>
+      <h2 class="rv" style="--d:1">From the workbook.</h2>
+      <p class="lede rv" style="--d:2">Pieces with the metal already in the shop and the wood still drying. Any of the three can be built to order — the drawing is the agreement, the lamp will differ where the material insists.</p>
+    </div>
+    <div class="grid-3">
+
+      <article class="piece rv" style="--d:1">
+        <div class="tile">
+          <span class="stamp">Drawing · to order</span>
+          <svg viewBox="0 0 200 230" role="img" aria-label="Drawing of the Piston No. 4 desk lamp">
+            <circle class="lamp-glow" cx="140" cy="88" r="70" fill="url(#g-glow)"/>
+            <path d="M110 76 L172 76 L196 156 L92 156 Z" fill="#D8862A" opacity=".06"/>
+            <path d="M100 138 L141 74" fill="none" stroke="url(#g-brass)" stroke-width="6" stroke-linecap="round"/>
+            <path d="M108 74 A34 26 0 0 1 174 74 Z" fill="#FFF8EB" stroke="#14181A" stroke-width="1" stroke-linejoin="round"/>
+            <circle cx="141" cy="80" r="7" fill="#FCE9C2"/>
+            <rect x="74" y="132" width="52" height="58" rx="4" fill="url(#g-metal)" stroke="#14181A" stroke-width=".9"/>
+            <path d="M76 146 H124 M76 156 H124" stroke="#6E767B" stroke-width="1.4" opacity=".7"/>
+            <circle cx="100" cy="176" r="6" fill="none" stroke="#6E767B" stroke-width="1.4"/>
+            <rect x="52" y="190" width="96" height="8" rx="2" fill="#B9BEC0"/>
+            <ellipse cx="100" cy="206" rx="62" ry="5" fill="#14181A" opacity=".05"/>
+          </svg>
+        </div>
+        <div class="piece-meta">
+          <div class="piece-row"><h3>Piston No. 4</h3><span class="price">€290</span></div>
+          <p class="piece-desc">Desk lamp. Dacia 1300 piston, hand-bent brass arm, opal half-dome.</p>
+          <p class="dims">410 × 180 mm · 4 weeks</p>
+        </div>
+      </article>
+
+      <article class="piece rv" style="--d:2">
+        <div class="tile">
+          <span class="stamp">Drawing · to order</span>
+          <svg viewBox="0 0 200 230" role="img" aria-label="Drawing of the Bezel 74 wall sconce">
+            <circle class="lamp-glow" cx="100" cy="104" r="86" fill="url(#g-glow)"/>
+            <circle cx="100" cy="104" r="52" fill="none" stroke="url(#g-metal)" stroke-width="10"/>
+            <circle cx="100" cy="104" r="44" fill="#FFF7E6" stroke="#E6DECB" stroke-width="1"/>
+            <circle cx="100" cy="104" r="33" fill="none" stroke="#EFDFBE" stroke-width="1.1"/>
+            <circle cx="100" cy="104" r="22" fill="none" stroke="#EFDFBE" stroke-width="1.1"/>
+            <circle cx="100" cy="104" r="11" fill="#FBE7BC"/>
+            <rect x="93" y="158" width="14" height="28" fill="url(#g-metal)"/>
+            <rect x="76" y="184" width="48" height="7" rx="1.5" fill="#A9AFB2"/>
+            <ellipse cx="100" cy="199" rx="50" ry="4" fill="#14181A" opacity=".05"/>
+          </svg>
+        </div>
+        <div class="piece-meta">
+          <div class="piece-row"><h3>Bezel &rsquo;74</h3><span class="price">€260</span></div>
+          <p class="piece-desc">Wall sconce. Headlamp ring off a Dacia 1300, sandblasted opal glass.</p>
+          <p class="dims">Ø195 × 90 mm · 3 weeks</p>
+        </div>
+      </article>
+
+      <article class="piece rv" style="--d:3">
+        <div class="tile">
+          <span class="stamp">Drawing · to order</span>
+          <svg viewBox="0 0 200 230" role="img" aria-label="Drawing of the Spindle gear pendant">
+            <circle class="lamp-glow" cx="100" cy="164" r="70" fill="url(#g-glow)"/>
+            <path d="M82 148 L118 148 L156 214 L44 214 Z" fill="#D8862A" opacity=".07"/>
+            <path d="M100 14 V62" stroke="#8B938E" stroke-width="1.2"/>
+            <circle cx="100" cy="86" r="26" fill="none" stroke="#9AA0A3" stroke-width="11" stroke-dasharray="7 8"/>
+            <circle cx="100" cy="86" r="21" fill="url(#g-metal)" stroke="#14181A" stroke-width=".8"/>
+            <circle cx="100" cy="86" r="7" fill="#F3F2ED" stroke="#7C8489" stroke-width="1"/>
+            <path d="M64 102 L136 102 L118 148 L82 148 Z" fill="url(#g-wood)" stroke="#14181A" stroke-width=".9" stroke-linejoin="round"/>
+            <path d="M82 148 L118 148" stroke="#D8862A" stroke-width="1.6" opacity=".6"/>
+            <circle cx="100" cy="158" r="10" fill="#FDF2D8" stroke="#14181A" stroke-width=".8"/>
+          </svg>
+        </div>
+        <div class="piece-meta">
+          <div class="piece-row"><h3>Spindle</h3><span class="price">€390</span></div>
+          <p class="piece-desc">Pendant. Tractor gearbox wheel, walnut cone turned to the tooth pitch.</p>
+          <p class="dims">Ø310 × 260 mm · 5 weeks</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- 06 ─────────────────────────── PROCESS -->
+<section class="slide" id="process" data-label="Process">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow rv">06 — How a lamp happens</p>
+      <h2 class="rv" style="--d:1">Nine months of waiting,<br>two weeks of work.</h2>
+      <p class="lede rv" style="--d:2">The order matters. Skip the drying and the wood splits around the socket a year later, in someone's living room.</p>
+    </div>
+    <div class="steps">
+      <div class="step rv" style="--d:1"><span class="num">01</span><div class="step-body"><h3>Finding</h3><p>Walked after storms, along water and woodlot edges. Only what is already dead and loose. Most of what I pick up goes back.</p><span class="when">Nov – Mar · a few hours a week</span></div></div>
+      <div class="step rv" style="--d:2"><span class="num">02</span><div class="step-body"><h3>Curing</h3><p>Washed, bark taken back to the hard wood underneath, then stacked in an open shed with air on all four sides. No kiln — kiln-dried branch wood checks along the grain.</p><span class="when">6 – 9 months</span></div></div>
+      <div class="step rv" style="--d:3"><span class="num">03</span><div class="step-body"><h3>The base</h3><p>A slice off a fallen trunk, 40 mm thick, bark left on the edge. Flattened by hand until it sits on a table without a single rock.</p><span class="when">Half a day</span></div></div>
+      <div class="step rv" style="--d:1"><span class="num">04</span><div class="step-body"><h3>Fitting</h3><p>The branch decides where the socket goes, not the drawing. Blind mortise into the base, brass E27 with a key switch, nothing structural held by glue.</p><span class="when">2 – 4 days</span></div></div>
+      <div class="step rv" style="--d:2"><span class="num">05</span><div class="step-body"><h3>Rope and wiring</h3><p>Hemp rope spiralled from socket to base with the flex inside it. Strain relief at both ends, then continuity- and insulation-tested before it leaves.</p><span class="when">Half a day · CE tested</span></div></div>
+      <div class="step rv" style="--d:3"><span class="num">06</span><div class="step-body"><h3>Finish</h3><p>Three coats of hardwax oil, 24 hours between, cut back with 400 grit. No stain, ever — that honey colour is the wood and the oil, nothing else.</p><span class="when">4 days</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 ─────────────────────────── WORKSHOP -->
+<section class="slide" id="workshop" data-label="Workshop">
+  <div class="bg" aria-hidden="true"><img src="assets/hills.jpg" alt="" loading="lazy"></div>
+  <div class="wrap">
+    <div class="statement">
+      <p class="eyebrow rv">07 — The workshop</p>
+      <h2 class="rv" style="--d:1">One bench,<br>one pair of hands.</h2>
+      <p class="rv" style="--d:2">The bench is outside, under a walnut, and it stays there until November. That is most of why these lamps look the way they do: the wood is found within a morning's walk of where it gets cut, and the first time a finished lamp is switched on, it is switched on in the yard.</p>
+      <p class="rv" style="--d:3">I don't make series. Two lamps off the same tree will still be two different lamps, and if you ask me for a matching pair I'll tell you honestly which one to take. What you get is a signed piece, a written note of where every part of it came from, and someone who will rewire it for you in ten years.</p>
+    </div>
+    <dl class="facts rv" style="--d:2">
+      <div class="fact"><dt>Working since</dt><dd>2019</dd></div>
+      <div class="fact"><dt>Pieces a year</dt><dd>~30</dd></div>
+      <div class="fact"><dt>Identical pieces made</dt><dd>0</dd></div>
+      <div class="fact"><dt>Lead time on a commission</dt><dd>3–5 weeks</dd></div>
+      <div class="fact"><dt>Electrical standard</dt><dd>CE · 230 V · E27</dd></div>
+      <div class="fact"><dt>Ships</dt><dd>EU-wide, crated</dd></div>
+      <div class="fact"><dt>Repairs &amp; rewiring</dt><dd>Free, for life</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- 08 ─────────────────────────── COMMISSIONS -->
+<section class="slide" id="commissions" data-label="Commissions">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow rv">08 — Commissions</p>
+      <h2 class="rv" style="--d:1">Bring me the object.</h2>
+      <p class="lede rv" style="--d:2">A grandfather's tool, a part off the car you sold, a branch you carried home from a holiday. It works best when the material already means something.</p>
+    </div>
+    <div class="steps" style="grid-template-columns:repeat(3,1fr)">
+      <div class="step rv" style="--d:1"><span class="num">01</span><div class="step-body"><h3>Send a photo</h3><p>The object, or the corner of the room it has to light. Shelf depth and a rough sense of how dark you want it is enough to start.</p><span class="when">Reply within 2 days</span></div></div>
+      <div class="step rv" style="--d:2"><span class="num">02</span><div class="step-body"><h3>Sketch and price</h3><p>A hand drawing, the materials I'd use, and a fixed price. No fee for this, and no obligation. Half up front if you go ahead.</p><span class="when">Within a week</span></div></div>
+      <div class="step rv" style="--d:3"><span class="num">03</span><div class="step-body"><h3>On the bench</h3><p>Photos as it goes. Delivered crated, with the bulb in it and a card listing where each part came from.</p><span class="when">3 – 5 weeks</span></div></div>
+    </div>
+    <div class="note rv" style="--d:3">
+      <span class="mono-xs">Please note</span>
+      <p>I take about one commission a month, and I turn down anything that needs the wood stained, straightened or matched to a sample. If that's what the room needs, I'll happily point you to someone who does it well.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 ─────────────────────────── CONTACT -->
+<section class="slide" id="contact" data-label="Contact">
+  <div class="wrap">
+    <div class="head" style="margin-bottom:0">
+      <p class="eyebrow rv">09 — Come by, or write</p>
+      <h2 class="rv" style="--d:1">The bench is outside,<br>under the walnut.</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-block rv" style="--d:1">
+        <span class="mono-xs">Write</span>
+        <a href="mailto:hello@lightandmatter.studio">hello@lightandmatter.studio</a>
+        <a href="tel:+40000000000">+40 000 000 000</a>
+        <p>Answered within two days, usually in the evening.</p>
+      </div>
+      <div class="contact-block rv" style="--d:2">
+        <span class="mono-xs">Visit</span>
+        <p>Atelier 4, Strada Portului<br>Constanța, Romania</p>
+        <p>Saturdays 10:00–14:00, or any day by appointment.</p>
+      </div>
+      <div class="contact-block rv" style="--d:3">
+        <span class="mono-xs">Follow the finds</span>
+        <a href="#intro">Instagram — @lightandmatter</a>
+        <a href="#intro">A letter, four times a year</a>
+        <p>Mostly wood on a bench, occasionally a finished lamp.</p>
+      </div>
+    </div>
+    <div class="bigmark rv" style="--d:1">LIGHT <span class="amp">&amp;</span> MATTER</div>
+    <div class="colophon">
+      <span class="mono-xs">Handmade lighting · found wood, brass, salvage · est. 2019</span>
+      <span class="mono-xs">All pieces one of one · CE tested · &copy; 2026</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots = document.getElementById('dots');
+  var bar = document.getElementById('bar');
+  var counter = document.getElementById('counter');
+  var current = 0;
+
+  /* ---- dot navigation ---- */
+  slides.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('data-label', s.dataset.label);
+    b.setAttribute('aria-label', 'Go to ' + s.dataset.label);
+    b.addEventListener('click', function () { go(i); });
+    dots.appendChild(b);
+  });
+  var buttons = Array.prototype.slice.call(dots.children);
+
+  function setActive(i) {
+    if (i === current) return;
+    current = i;
+    buttons.forEach(function (b, n) { b.setAttribute('aria-current', n === i ? 'true' : 'false'); });
+    counter.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+  }
+  buttons[0].setAttribute('aria-current', 'true');
+
+  function go(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    setActive(i);
+  }
+
+  /* ---- keyboard navigation ---- */
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target;
+    if (t && (/^(input|textarea|select)$/i.test(t.tagName) || t.isContentEditable)) return;
+    var k = e.key, handled = true;
+    if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown') go(current + 1);
+    else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp') go(current - 1);
+    else if (k === 'Home') go(0);
+    else if (k === 'End') go(slides.length - 1);
+    else handled = false;
+    if (handled) e.preventDefault();
+  });
+
+  /* ---- which slide are we on ---- */
+  var spy = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) setActive(slides.indexOf(en.target)); });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 }) : null;
+  if (spy) slides.forEach(function (s) { spy.observe(s); });
+
+  /* ---- reveal on scroll ---- */
+  var targets = Array.prototype.slice.call(document.querySelectorAll('.rv'));
+  if ('IntersectionObserver' in window && !reduce) {
+    var rev = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); rev.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    targets.forEach(function (t) { rev.observe(t); });
+  } else {
+    targets.forEach(function (t) { t.classList.add('in'); });
+  }
+
+  /* ---- progress bar ---- */
+  var ticking = false;
+  function paint() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    bar.style.width = (p * 100).toFixed(2) + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+  }, { passive: true });
+  window.addEventListener('resize', paint);
+  paint();
+})();
+</script>
+</body>
+</html>

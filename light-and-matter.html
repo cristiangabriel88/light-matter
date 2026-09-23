@@ -217,8 +217,10 @@
 		.progress span {
 			display: block;
 			height: 100%;
-			width: 0;
-			background: var(--glow)
+			background: var(--glow);
+			transform: scaleX(0);
+			transform-origin: 0 0;
+			will-change: transform
 		}
 
 		.rail {
@@ -372,14 +374,20 @@
 		/* ---------- motion ---------- */
 		.rv {
 			opacity: 0;
-			transform: translateY(22px);
+			transform: translate3d(0, 22px, 0);
 			transition: opacity .85s var(--ease), transform .85s var(--ease);
-			transition-delay: calc(var(--d, 0)*90ms)
+			transition-delay: calc(var(--d, 0)*90ms);
+			will-change: opacity, transform;
+			backface-visibility: hidden
 		}
 
 		.rv.in {
 			opacity: 1;
 			transform: none
+		}
+
+		.rv.settled {
+			will-change: auto
 		}
 
 		@keyframes rise {
@@ -2089,8 +2097,7 @@
 					<article class="lot rv" style="--d:1" data-piece="arc">
 						<button class="stack" type="button" aria-label="The Arc · open 4 photographs">
 							<span class="sheet s0"><img src="assets/arc-lit.jpg"
-									alt="The Arc lit at night, amber filament bulb under a brass socket, a dotted mandala on the wall behind"
-									loading="lazy"><span class="cue"><b>4</b> photos</span></span>
+									alt="The Arc lit at night, amber filament bulb under a brass socket, a dotted mandala on the wall behind"><span class="cue"><b>4</b> photos</span></span>
 						</button>
 						<div class="piece-meta">
 							<div class="piece-row">
@@ -2104,8 +2111,7 @@
 					<article class="lot rv" style="--d:2" data-piece="trumpet">
 						<button class="stack" type="button" aria-label="The Trumpet · open 3 photographs">
 							<span class="sheet s0"><img src="assets/trumpet.jpg"
-									alt="A brass trumpet standing on its bell on a round wooden plinth, lit under a pleated drum shade"
-									loading="lazy"><span class="cue"><b>3</b> photos</span></span>
+									alt="A brass trumpet standing on its bell on a round wooden plinth, lit under a pleated drum shade"><span class="cue"><b>3</b> photos</span></span>
 						</button>
 						<div class="piece-meta">
 							<div class="piece-row">
@@ -2429,7 +2435,7 @@
 
 		<!-- 07 ─────────────────────────── WORKSHOP -->
 		<section class="slide" id="workshop" data-label="Workshop">
-			<div class="bg" aria-hidden="true"><img src="assets/hills.jpg" alt="" loading="lazy"></div>
+			<div class="bg" aria-hidden="true"><img src="assets/hills.jpg" alt=""></div>
 			<div class="wrap">
 				<div class="statement">
 					<p class="eyebrow rv">The workshop</p>
@@ -2515,7 +2521,7 @@
 		<!-- 09 ─────────────────────────── CONTACT -->
 		<section class="slide" id="contact" data-label="Contact">
 			<div class="bg" aria-hidden="true">
-				<video muted loop playsinline preload="metadata" disablepictureinpicture
+				<video muted loop playsinline preload="auto" disablepictureinpicture
 					poster="videos/contact-poster.jpg">
 					<source src="videos/contact.webm" type="video/webm">
 					<source src="videos/contact.mp4" type="video/mp4">
@@ -2616,11 +2622,21 @@
 				if ('IntersectionObserver' in window) {
 					var vio = new IntersectionObserver(function (entries) {
 						entries.forEach(function (en) {
+							en.target._near = en.isIntersecting;
 							if (en.isIntersecting) { var p = en.target.play(); if (p && p.catch) p.catch(function () { }); }
 							else en.target.pause();
 						});
-					}, { threshold: 0 });
+					}, { rootMargin: '100% 0px', threshold: 0 });
 					bgVideos.forEach(function (v) { vio.observe(v); });
+					// some browsers (Safari) only buffer on play: play each far-off video for a moment so it is ready when reached
+					window.addEventListener('load', function () {
+						bgVideos.forEach(function (v) {
+							var r = v.getBoundingClientRect(), vh = window.innerHeight;
+							if (r.bottom > -vh && r.top < 2 * vh) return; // near the screen: the observer already plays it
+							v.addEventListener('playing', function () { if (!v._near) v.pause(); }, { once: true });
+							var p = v.play(); if (p && p.catch) p.catch(function () { });
+						});
+					});
 				} else bgVideos.forEach(function (v) { v.play(); });
 			}
 
@@ -2645,7 +2661,7 @@
 
 			function go(i) {
 				i = Math.max(0, Math.min(slides.length - 1, i));
-				animateTo(slides[i].offsetTop);
+				animateTo(startOf(slides[i]));
 				setActive(i);
 			}
 
@@ -2662,8 +2678,19 @@
 				for (var n = 0; n < slides.length; n++) if (slides[n].offsetTop <= y + 1) a = n;
 				return a;
 			}
-			// where a section rests: its top, or for one taller than the screen, its bottom flush with the screen's
-			function endOf(s) { return Math.max(s.offsetTop, s.offsetTop + s.offsetHeight - window.innerHeight); }
+			// where a section's content sits centred on the screen, or null when the content is taller than the screen
+			function centreOf(s) {
+				var w = s.querySelector(':scope > .wrap'), vh = window.innerHeight;
+				if (!w || w.offsetHeight > vh) return null;
+				return Math.max(s.offsetTop, Math.round(s.offsetTop + w.offsetTop + w.offsetHeight / 2 - vh / 2));
+			}
+			// where a section rests, arriving from above / from below: centred on its content when that fits
+			// (the same spot from either side), otherwise its top, or its bottom flush with the screen's
+			function startOf(s) { var c = centreOf(s); return c === null ? s.offsetTop : c; }
+			function endOf(s) {
+				var c = centreOf(s);
+				return c === null ? Math.max(s.offsetTop, s.offsetTop + s.offsetHeight - window.innerHeight) : c;
+			}
 
 			function bezier(x1, y1, x2, y2) {
 				function c(t, p1, p2) { var u = 1 - t; return 3 * u * u * t * p1 + 3 * u * t * t * p2 + t * t * t; }
@@ -2683,6 +2710,7 @@
 				var from = window.scrollY, dist = y - from;
 				if (reduce || Math.abs(dist) < 2) { jump(y); restY = y; return; }
 				var dur = Math.min(720, 480 + Math.abs(dist) * 0.08), t0 = performance.now();
+				revealAt(y);
 				anim = { to: y };
 				anim.raf = requestAnimationFrame(function step(now) {
 					var t = Math.min(1, (now - t0) / dur);
@@ -2704,7 +2732,7 @@
 				if (!dy) return;
 
 				// a fresh flick mid-glide carries on from where the glide is heading
-				var y = anim ? anim.to : window.scrollY, a = slideAt(y), A = slides[a], aTop = A.offsetTop, aEnd = endOf(A), target;
+				var y = anim ? anim.to : window.scrollY, a = slideAt(y), A = slides[a], aTop = startOf(A), aEnd = endOf(A), target;
 				if (dy > 0) {
 					if (y < aEnd - 1) {                   // a tall section still has room: read it natively, stop at its end
 						if (anim) { e.preventDefault(); consumed = true; animateTo(Math.min(aEnd, y + mag)); }
@@ -2712,7 +2740,7 @@
 						return;
 					}
 					if (!slides[a + 1]) { e.preventDefault(); consumed = true; return; } // the last section: nowhere to go, so no rubber-band bounce
-					target = slides[a + 1].offsetTop;
+					target = startOf(slides[a + 1]);
 				} else {
 					if (y > aTop + 1 && y <= aEnd + 1) {
 						if (anim) { e.preventDefault(); consumed = true; animateTo(Math.max(aTop, y - mag)); }
@@ -2750,10 +2778,13 @@
 				var y = window.scrollY, vh = window.innerHeight, dir = y - restY;
 				var nudge = Math.max(32, vh * 0.05);
 				var a = slideAt(y), A = slides[a], B = slides[a + 1], aEnd = endOf(A);
-				if (!B || y <= aEnd + 1) { restY = y; return; }      // resting inside one section, leave it
+				if (!B || y <= aEnd + 1) {                            // inside one section: centre it if it fits, else leave it
+					if (centreOf(A) !== null && Math.abs(y - aEnd) > 1) animateTo(aEnd); else restY = y;
+					return;
+				}
 				var bTop = B.offsetTop;
-				if (dir >= 0) animateTo(y + vh - bTop > nudge ? bTop : aEnd);
-				else animateTo(bTop - y > nudge ? aEnd : bTop);
+				if (dir >= 0) animateTo(y + vh - bTop > nudge ? startOf(B) : aEnd);
+				else animateTo(bTop - y > nudge ? aEnd : startOf(B));
 			}
 
 			function onScrollSettle() {
@@ -3261,23 +3292,48 @@
 
 			/* ---- reveal on scroll ---- */
 			var targets = Array.prototype.slice.call(document.querySelectorAll('.rv'));
+			var rev = null;
+			function reveal(el) {
+				if (el.classList.contains('in')) return;
+				el.classList.add('in');
+				if (rev) rev.unobserve(el);
+			}
+			// everything that will be on screen once the page rests at y
+			function revealAt(y) {
+				var top = y, bottom = y + window.innerHeight, sy = window.scrollY;
+				targets.forEach(function (el) {
+					if (el.classList.contains('in')) return;
+					var r = el.getBoundingClientRect();
+					if (r.top + sy < bottom && r.bottom + sy > top) reveal(el);
+				});
+			}
+			targets.forEach(function (el) {
+				el.addEventListener('transitionend', function (e) {
+					if (e.target === el && e.propertyName === 'opacity' && el.classList.contains('in')) el.classList.add('settled');
+				});
+			});
 			if ('IntersectionObserver' in window && !reduce) {
-				var rev = new IntersectionObserver(function (entries) {
-					entries.forEach(function (en) {
-						if (en.isIntersecting) { en.target.classList.add('in'); rev.unobserve(en.target); }
-					});
+				rev = new IntersectionObserver(function (entries) {
+					entries.forEach(function (en) { if (en.isIntersecting) reveal(en.target); });
 				}, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
 				targets.forEach(function (t) { rev.observe(t); });
 			} else {
-				targets.forEach(function (t) { t.classList.add('in'); });
+				targets.forEach(function (t) { t.classList.add('in', 'settled'); });
 			}
+
+			/* ---- decode images ahead of time, so none paints blank for a frame when first scrolled to ---- */
+			window.addEventListener('load', function () {
+				Array.prototype.forEach.call(document.querySelectorAll('.slide img'), function (img) {
+					if (img.decode) img.decode().catch(function () { });
+				});
+			});
 
 			/* ---- progress bar ---- */
 			var ticking = false;
 			function paint() {
 				var max = document.documentElement.scrollHeight - window.innerHeight;
 				var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
-				bar.style.width = (p * 100).toFixed(2) + '%';
+				bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
 				ticking = false;
 			}
 			window.addEventListener('scroll', function () {

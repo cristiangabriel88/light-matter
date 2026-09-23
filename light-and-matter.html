@@ -8,7 +8,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=JetBrains+Mono:wght@400;500&display=swap">
+		href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300&family=Lexend:wght@300;400;500;600&display=swap">
 	<style>
 		:root {
 			--radius: 14px;
@@ -30,7 +30,7 @@
 			--rope: #C9B892;
 			--f-display: "Syne", "Helvetica Neue", Helvetica, Arial, sans-serif;
 			--f-body: "Newsreader", Georgia, "Times New Roman", serif;
-			--f-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+			--f-label: "Lexend", "Helvetica Neue", Helvetica, Arial, sans-serif;
 			--gutter: clamp(20px, 5vw, 64px);
 			--ease: cubic-bezier(.22, .72, .2, 1);
 		}
@@ -52,7 +52,8 @@
 		}
 
 		html {
-			scroll-behavior: smooth
+			scroll-behavior: smooth;
+			overscroll-behavior-y: none
 		}
 
 		img,
@@ -101,7 +102,7 @@
 		}
 
 		.eyebrow {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 11px;
 			font-weight: 500;
 			line-height: 1.4;
@@ -119,7 +120,7 @@
 		}
 
 		.mono-xs {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 11px;
 			letter-spacing: .09em;
 			text-transform: uppercase;
@@ -182,6 +183,16 @@
 				linear-gradient(100deg, rgba(252, 252, 250, .975) 0%, rgba(252, 252, 250, .94) 36%, rgba(252, 252, 250, .66) 60%, rgba(252, 252, 250, .44) 100%);
 		}
 
+		#contact .bg video {
+			object-position: 50% 70%
+		}
+
+		#contact .bg::after {
+			background:
+				linear-gradient(180deg, var(--paper) 0%, rgba(252, 252, 250, 0) 16%, rgba(252, 252, 250, 0) 62%, rgba(252, 252, 250, .55) 88%, rgba(252, 252, 250, .8) 100%),
+				linear-gradient(90deg, rgba(252, 252, 250, .8) 0%, rgba(252, 252, 250, .55) 42%, rgba(252, 252, 250, .12) 100%);
+		}
+
 		#workshop .bg img {
 			object-position: 50% 68%
 		}
@@ -227,7 +238,7 @@
 		.rail b,
 		.rail span {
 			writing-mode: vertical-rl;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10px;
 			font-weight: 500;
 			letter-spacing: .26em;
@@ -284,7 +295,7 @@
 			right: 17px;
 			top: 50%;
 			transform: translateY(-50%);
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10px;
 			letter-spacing: .14em;
 			text-transform: uppercase;
@@ -322,7 +333,7 @@
 			display: flex;
 			align-items: center;
 			gap: 2px;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 11px;
 			letter-spacing: .14em;
 			color: var(--ink-3)
@@ -448,7 +459,7 @@
 			border-top-right-radius: 8px;
 			background: var(--paper);
 			padding: 8px 12px;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10px;
 			letter-spacing: .12em;
 			text-transform: uppercase;
@@ -466,7 +477,7 @@
 			align-items: center;
 			gap: 9px;
 			text-decoration: none;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 11px;
 			letter-spacing: .14em;
 			text-transform: uppercase;
@@ -501,7 +512,7 @@
 			align-items: center;
 			gap: 10px;
 			color: var(--ink-3);
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10.5px;
 			letter-spacing: .13em;
 			text-transform: uppercase
@@ -557,7 +568,7 @@
 		}
 
 		.spec-list li {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 11.5px;
 			line-height: 1.5;
 			color: var(--ink-2);
@@ -690,7 +701,7 @@
 			position: absolute;
 			top: 11px;
 			left: 13px;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 9.5px;
 			letter-spacing: .13em;
 			text-transform: uppercase;
@@ -713,7 +724,7 @@
 			border-radius: 99px;
 			background: rgba(252, 252, 250, .9);
 			backdrop-filter: blur(6px);
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 9.5px;
 			letter-spacing: .12em;
 			text-transform: uppercase;
@@ -763,7 +774,7 @@
 			padding: 7px 0 6px;
 			transform: rotate(45deg);
 			text-align: center;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10px;
 			font-weight: 500;
 			letter-spacing: .42em;
@@ -914,7 +925,7 @@
 			position: absolute;
 			left: 16px;
 			bottom: 14px;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10px;
 			letter-spacing: .13em;
 			text-transform: uppercase;
@@ -953,7 +964,7 @@
 		}
 
 		.lb-status {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10.5px;
 			letter-spacing: .1em;
 			text-transform: uppercase;
@@ -976,7 +987,7 @@
 
 		.lb-more {
 			align-self: flex-start;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 11px;
 			letter-spacing: .12em;
 			text-transform: uppercase;
@@ -1009,7 +1020,7 @@
 
 		.lb-cap b {
 			display: block;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-weight: 500;
 			font-size: 10.5px;
 			letter-spacing: .12em;
@@ -1026,7 +1037,7 @@
 
 		.lb-count {
 			margin-right: auto;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 12px;
 			color: var(--ink);
 			font-variant-numeric: tabular-nums;
@@ -1115,7 +1126,7 @@
 		}
 
 		.dl dt {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10.5px;
 			letter-spacing: .12em;
 			text-transform: uppercase;
@@ -1136,7 +1147,7 @@
 		.dl dd b {
 			font-weight: 400;
 			color: var(--ink);
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 13px;
 			font-variant-numeric: tabular-nums
 		}
@@ -1185,7 +1196,7 @@
 			position: absolute;
 			top: 10px;
 			left: 12px;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 9.5px;
 			letter-spacing: .13em;
 			text-transform: uppercase;
@@ -1213,7 +1224,7 @@
 		}
 
 		.price {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 12.5px;
 			color: var(--ink);
 			font-variant-numeric: tabular-nums;
@@ -1227,7 +1238,7 @@
 		}
 
 		.dims {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10.5px;
 			letter-spacing: .07em;
 			color: var(--ink-3);
@@ -1251,7 +1262,7 @@
 		}
 
 		.step .num {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 11px;
 			font-weight: 500;
 			color: var(--glow);
@@ -1277,7 +1288,7 @@
 		}
 
 		.step .when {
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 10.5px;
 			letter-spacing: .08em;
 			text-transform: uppercase;
@@ -1329,7 +1340,7 @@
 
 		.fact dd {
 			margin: 0;
-			font-family: var(--f-mono);
+			font-family: var(--f-label);
 			font-size: 12.5px;
 			color: var(--ink);
 			text-align: right;
@@ -1359,14 +1370,16 @@
 		}
 
 		/* ---------- contact ---------- */
+		/* one screen, like every other section: nothing here grows past the viewport height */
 		#contact {
-			align-items: flex-end
+			align-items: flex-end;
+			padding-bottom: clamp(36px, 6vh, 72px)
 		}
 
 		#contact .wrap {
 			display: flex;
 			flex-direction: column;
-			gap: clamp(28px, 5.5vh, 56px)
+			gap: clamp(20px, 4.5vh, 56px)
 		}
 
 		.contact-grid {
@@ -1416,7 +1429,7 @@
 			font-family: var(--f-display);
 			font-weight: 800;
 			letter-spacing: -.045em;
-			font-size: clamp(40px, 11.4vw, 146px);
+			font-size: clamp(40px, min(11.4vw, calc(47vh - 230px)), 146px);
 			line-height: .85;
 			color: var(--ink)
 		}
@@ -1554,6 +1567,435 @@
 		}
 	</style>
 
+	<!-- ---------- full specification popup (standalone: opens on top of the photo deck) ---------- -->
+	<style>
+		.fs {
+			position: fixed;
+			inset: 0;
+			z-index: 110;
+			display: grid;
+			place-items: center;
+			visibility: hidden;
+			pointer-events: none;
+			transition: visibility 0s linear .6s
+		}
+
+		.fs.open {
+			visibility: visible;
+			pointer-events: auto;
+			transition: none
+		}
+
+		.fs-scrim {
+			position: absolute;
+			inset: 0;
+			background: rgba(20, 24, 26, .42);
+			-webkit-backdrop-filter: blur(8px);
+			backdrop-filter: blur(8px);
+			opacity: 0;
+			transition: opacity .5s var(--ease)
+		}
+
+		.fs.open .fs-scrim {
+			opacity: 1
+		}
+
+		.fs-panel {
+			position: relative;
+			width: min(1240px, calc(100vw - 2*var(--gutter)));
+			height: min(820px, calc(100svh - 40px));
+			background: var(--paper);
+			border-radius: 24px;
+			overflow: hidden;
+			display: grid;
+			grid-template-columns: minmax(0, 1.15fr) minmax(340px, 1fr);
+			box-shadow: 0 50px 110px -40px rgba(0, 0, 0, .7), 0 0 0 1px rgba(20, 24, 26, .06);
+			opacity: 0;
+			transform: translateY(36px) scale(.965);
+			transition: opacity .5s var(--ease), transform .7s var(--ease)
+		}
+
+		.fs.open .fs-panel {
+			opacity: 1;
+			transform: none
+		}
+
+		/* left: the carousel */
+		.fs-gallery {
+			display: grid;
+			grid-template-rows: minmax(0, 1fr) auto;
+			min-height: 0;
+			background: radial-gradient(120% 90% at 50% 40%, var(--panel) 0%, var(--panel-2) 100%)
+		}
+
+		.fs-stage {
+			position: relative;
+			overflow: hidden;
+			touch-action: pan-y;
+			cursor: grab
+		}
+
+		.fs-stage.dragging {
+			cursor: grabbing
+		}
+
+		.fs-track {
+			display: flex;
+			height: 100%;
+			will-change: transform;
+			transition: transform .65s var(--ease)
+		}
+
+		.fs-stage.dragging .fs-track {
+			transition: none
+		}
+
+		.fs-slide {
+			flex: 0 0 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: clamp(24px, 3.4vw, 48px) clamp(24px, 4vw, 64px) clamp(16px, 2vw, 24px)
+		}
+
+		.fs-slide img {
+			display: block;
+			max-width: 100%;
+			max-height: 100%;
+			width: auto;
+			height: auto;
+			border-radius: 14px;
+			box-shadow: 0 2px 6px rgba(20, 24, 26, .08), 0 34px 60px -34px rgba(20, 24, 26, .55);
+			user-select: none;
+			-webkit-user-select: none;
+			-webkit-user-drag: none;
+			pointer-events: none
+		}
+
+		.fs-drawn {
+			position: relative;
+			height: 100%;
+			max-width: 100%;
+			aspect-ratio: 4/5;
+			border-radius: 14px;
+			background: var(--paper);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-shadow: 0 2px 6px rgba(20, 24, 26, .06), 0 34px 60px -34px rgba(20, 24, 26, .4)
+		}
+
+		.fs-drawn svg {
+			width: 78%;
+			height: 78%
+		}
+
+		.fs-drawn .stamp,
+		.fs-drawn .view {
+			position: absolute;
+			left: 16px;
+			font-family: var(--f-label);
+			font-size: 9.5px;
+			letter-spacing: .13em;
+			text-transform: uppercase;
+			color: var(--ink-3)
+		}
+
+		.fs-drawn .stamp {
+			top: 14px
+		}
+
+		.fs-drawn .view {
+			bottom: 14px
+		}
+
+		.fs-arrow {
+			-webkit-appearance: none;
+			appearance: none;
+			position: absolute;
+			top: 50%;
+			z-index: 2;
+			display: grid;
+			place-items: center;
+			width: 46px;
+			height: 46px;
+			margin-top: -23px;
+			border-radius: 99px;
+			border: 1px solid rgba(20, 24, 26, .1);
+			background: rgba(252, 252, 250, .82);
+			-webkit-backdrop-filter: blur(8px);
+			backdrop-filter: blur(8px);
+			color: var(--ink);
+			font-size: 17px;
+			line-height: 1;
+			cursor: pointer;
+			opacity: .75;
+			transition: opacity .3s var(--ease), background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease)
+		}
+
+		.fs-arrow.prev {
+			left: 16px
+		}
+
+		.fs-arrow.next {
+			right: 16px
+		}
+
+		.fs-stage:hover .fs-arrow,
+		.fs-arrow:focus-visible {
+			opacity: 1
+		}
+
+		.fs-arrow:hover {
+			background: var(--ink);
+			color: var(--paper)
+		}
+
+		.fs-arrow:active {
+			transform: scale(.94)
+		}
+
+		.fs-arrow[disabled] {
+			opacity: 0 !important;
+			pointer-events: none
+		}
+
+		.fs-arrow[hidden],
+		.fs-count[hidden],
+		.fs-thumbs[hidden] {
+			display: none
+		}
+
+		.fs-count {
+			position: absolute;
+			left: 18px;
+			top: 18px;
+			z-index: 2;
+			padding: 6px 11px;
+			border-radius: 99px;
+			background: rgba(252, 252, 250, .86);
+			-webkit-backdrop-filter: blur(6px);
+			backdrop-filter: blur(6px);
+			font-family: var(--f-label);
+			font-size: 11px;
+			letter-spacing: .06em;
+			font-variant-numeric: tabular-nums;
+			color: var(--ink)
+		}
+
+		.fs-count span {
+			color: var(--ink-3)
+		}
+
+		.fs-strip {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+			padding: 0 clamp(24px, 4vw, 64px) clamp(20px, 2.6vw, 30px)
+		}
+
+		.fs-cap {
+			min-height: 2.9em;
+			font-size: 14.5px;
+			line-height: 1.45;
+			color: var(--ink-2);
+			text-align: center
+		}
+
+		.fs-cap b {
+			font-family: var(--f-label);
+			font-weight: 500;
+			font-size: 10.5px;
+			letter-spacing: .12em;
+			text-transform: uppercase;
+			color: var(--ink);
+			margin-right: 8px
+		}
+
+		.fs-thumbs {
+			display: flex;
+			justify-content: center;
+			gap: 10px;
+			overflow-x: auto;
+			scrollbar-width: none;
+			padding: 3px
+		}
+
+		.fs-thumbs::-webkit-scrollbar {
+			display: none
+		}
+
+		.fs-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			flex: 0 0 auto;
+			width: 54px;
+			height: 68px;
+			padding: 0;
+			border: 0;
+			border-radius: 9px;
+			overflow: hidden;
+			background: var(--paper);
+			cursor: pointer;
+			opacity: .55;
+			outline: 1px solid transparent;
+			outline-offset: 2px;
+			transition: opacity .3s var(--ease), outline-color .3s var(--ease), transform .3s var(--ease)
+		}
+
+		.fs-thumb:hover {
+			opacity: .9
+		}
+
+		.fs-thumb[aria-current="true"] {
+			opacity: 1;
+			outline-color: var(--ink)
+		}
+
+		.fs-thumb img,
+		.fs-thumb svg {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			pointer-events: none
+		}
+
+		/* right: the specification */
+		.fs-info {
+			display: flex;
+			flex-direction: column;
+			gap: 18px;
+			min-height: 0;
+			padding: clamp(32px, 3.8vw, 54px) clamp(26px, 3.4vw, 48px) clamp(26px, 3vw, 40px);
+			overflow-y: auto;
+			overscroll-behavior: contain
+		}
+
+		.fs-info h2 {
+			font-size: clamp(30px, 3.2vw, 46px)
+		}
+
+		.fs-price {
+			display: flex;
+			align-items: baseline;
+			gap: 12px;
+			flex-wrap: wrap
+		}
+
+		.fs-price .price {
+			font-size: 15px
+		}
+
+		.fs-status {
+			font-family: var(--f-label);
+			font-size: 10.5px;
+			letter-spacing: .1em;
+			text-transform: uppercase;
+			color: var(--ink-3)
+		}
+
+		.fs-status.sold {
+			color: #8A7038
+		}
+
+		.fs-lede {
+			font-size: 16.5px;
+			line-height: 1.6;
+			color: var(--ink-2)
+		}
+
+		.fs-specs {
+			margin-top: 4px;
+			border-bottom: 1px solid var(--rule)
+		}
+
+		.fs-specs dd {
+			font-size: 15px
+		}
+
+		.fs-cta {
+			align-self: flex-start;
+			margin-top: auto
+		}
+
+		.fs-close {
+			-webkit-appearance: none;
+			appearance: none;
+			position: absolute;
+			top: 14px;
+			right: 14px;
+			z-index: 5;
+			display: grid;
+			place-items: center;
+			width: 44px;
+			height: 44px;
+			border-radius: 99px;
+			border: 1px solid var(--rule-2);
+			background: rgba(252, 252, 250, .88);
+			color: var(--ink);
+			font-size: 22px;
+			line-height: 1;
+			cursor: pointer;
+			transition: border-color .3s var(--ease), transform .3s var(--ease)
+		}
+
+		.fs-close:hover {
+			border-color: var(--ink);
+			transform: rotate(90deg)
+		}
+
+		@media (max-width:820px) {
+			.fs-panel {
+				width: 100vw;
+				height: 100svh;
+				border-radius: 0;
+				grid-template-columns: 1fr;
+				grid-template-rows: auto;
+				overflow-y: auto;
+				overscroll-behavior: contain
+			}
+
+			.fs-gallery {
+				height: 62svh;
+				min-height: 380px
+			}
+
+			.fs-slide {
+				padding: 56px 20px 12px
+			}
+
+			.fs-arrow {
+				opacity: 1;
+				width: 40px;
+				height: 40px;
+				margin-top: -20px
+			}
+
+			.fs-arrow.prev {
+				left: 8px
+			}
+
+			.fs-arrow.next {
+				right: 8px
+			}
+
+			.fs-strip {
+				padding: 0 20px 16px
+			}
+
+			.fs-info {
+				overflow: visible;
+				padding: 28px 20px 36px
+			}
+
+			.fs-close {
+				position: fixed
+			}
+		}
+	</style>
+
 </head>
 
 <body>
@@ -1610,12 +2052,12 @@
 			</div>
 			<div class="wrap">
 				<div class="hero-copy">
-					<p class="eyebrow hero-el" style="--d:0">Light &amp; Matter · handmasde lighting, one of one</p>
-					<h1 class="hero-el" style="--d:1">One branch.<br>One log.<br>One bulb.</h1>
+					<p class="eyebrow hero-el" style="--d:0">Light &amp; Matter · handmade lighting, one of one</p>
+					<h1 class="hero-el" style="--d:1">Material.<br>Form.<br>Light.</h1>
 					<p class="hero-sub hero-el" style="--d:2">Every lamp starts as something already finished: a branch
 						the water bleached for a decade, a slice off a fallen walnut, now and then a piston or a
-						headlamp bezel that stopped being useful in 1974. I dry it, cut it, wrap the flex in hemp rope,
-						wire it myself as an authorized electrician, and give it a filament.</p>
+						headlamp bezel that stopped being useful in 1974. I dry it, cut it, polish it, protect it with
+						special laquer, and wire it myself as an authorized electrician.</p>
 					<div class="actions hero-el" style="--d:3">
 						<a class="btn" href="#collection">See the work</a>
 						<a class="btn ghost" href="#commissions">Commission a piece</a>
@@ -1636,7 +2078,7 @@
 		<section class="slide" id="collection" data-label="Collection">
 			<div class="wrap">
 				<div class="head">
-					<p class="eyebrow rv">02 · The collection</p>
+					<p class="eyebrow rv">The collection</p>
 					<h2 class="rv" style="--d:1">Each one started<br>as something else.</h2>
 					<p class="lede rv" style="--d:2">One found object per lamp, never a pair. Open a lamp to leaf
 						through its photographs.</p>
@@ -1742,7 +2184,7 @@
 		<section class="slide" id="materials" data-label="Materials">
 			<div class="wrap">
 				<div class="head">
-					<p class="eyebrow rv">03 · Where it comes from</p>
+					<p class="eyebrow rv">Where it comes from</p>
 					<h2 class="rv" style="--d:1">Three sources,<br>no catalogue.</h2>
 					<p class="lede rv" style="--d:2">Nothing is bought new except the socket, the flex and the oil.
 						Everything else is found, and what it was stays visible.</p>
@@ -1785,7 +2227,7 @@
 			</div>
 		</section>
 
-		<!-- 04 ─────────────────────────── FOCUS -->
+		<!-- 04 ─────────────────────────── FOCUS (commented out: now lives in the Full specification popup, #fs)
 		<section class="slide" id="arc" data-label="Specification">
 			<div class="wrap">
 				<figure class="focus-photo rv" style="margin:0">
@@ -1795,7 +2237,7 @@
 				</figure>
 				<div class="feature-copy">
 					<div class="head" style="margin-bottom:0">
-						<p class="eyebrow rv">04 · Specification</p>
+						<p class="eyebrow rv">Specification</p>
 						<h2 class="rv" style="--d:1">The Arc</h2>
 						<p class="lede rv" style="--d:2">The branch spent nine months drying in a shed before it was
 							stable enough to trust. It sits in a blind mortise cut into the log slice: no bracket, no
@@ -1823,12 +2265,13 @@
 				</div>
 			</div>
 		</section>
+		-->
 
-		<!-- 05 ─────────────────────────── WORKBOOK -->
+		<!-- 05 ─────────────────────────── WORKBOOK (commented out)
 		<section class="slide" id="workbook" data-label="Workbook">
 			<div class="wrap">
 				<div class="head">
-					<p class="eyebrow rv">05 · Drawn, not yet built</p>
+					<p class="eyebrow rv">Drawn, not yet built</p>
 					<h2 class="rv" style="--d:1">From the workbook.</h2>
 					<p class="lede rv" style="--d:2">Pieces with the metal already in the shop and the wood still
 						drying. Any of the three can be built to order. The drawing is the agreement, the lamp will
@@ -1920,12 +2363,13 @@
 				</div>
 			</div>
 		</section>
+		-->
 
 		<!-- 06 ─────────────────────────── PROCESS -->
 		<section class="slide" id="process" data-label="Process">
 			<div class="wrap">
 				<div class="head">
-					<p class="eyebrow rv">06 · How a lamp happens</p>
+					<p class="eyebrow rv">How a lamp happens</p>
 					<h2 class="rv" style="--d:1">Nine months of waiting,<br>two weeks of work.</h2>
 					<p class="lede rv" style="--d:2">The order matters. Skip the drying and the wood splits around the
 						socket a year later, in someone's living room.</p>
@@ -1987,7 +2431,7 @@
 			<div class="bg" aria-hidden="true"><img src="assets/hills.jpg" alt="" loading="lazy"></div>
 			<div class="wrap">
 				<div class="statement">
-					<p class="eyebrow rv">07 · The workshop</p>
+					<p class="eyebrow rv">The workshop</p>
 					<h2 class="rv" style="--d:1">One bench,<br>one pair of hands.</h2>
 					<p class="rv" style="--d:2">The bench is outside, under a walnut, and it stays there until November.
 						That is most of why these lamps look the way they do: the wood is found within a morning's walk
@@ -2039,7 +2483,7 @@
 		<section class="slide" id="commissions" data-label="Commissions">
 			<div class="wrap">
 				<div class="head">
-					<p class="eyebrow rv">08 · Commissions</p>
+					<p class="eyebrow rv">Commissions</p>
 					<h2 class="rv" style="--d:1">Bring me the object.</h2>
 					<p class="lede rv" style="--d:2">A grandfather's tool, a part off the car you sold, a branch you
 						carried home from a holiday. It works best when the material already means something.</p>
@@ -2073,9 +2517,16 @@
 
 		<!-- 09 ─────────────────────────── CONTACT -->
 		<section class="slide" id="contact" data-label="Contact">
+			<div class="bg" aria-hidden="true">
+				<video muted loop playsinline preload="metadata" disablepictureinpicture
+					poster="videos/contact-poster.jpg">
+					<source src="videos/contact.webm" type="video/webm">
+					<source src="videos/contact.mp4" type="video/mp4">
+				</video>
+			</div>
 			<div class="wrap">
 				<div class="head" style="margin-bottom:0">
-					<p class="eyebrow rv">09 · Write</p>
+					<p class="eyebrow rv">Write</p>
 					<h2 class="rv" style="--d:1">The bench is outside,<br>under the walnut.</h2>
 				</div>
 				<div class="contact-grid">
@@ -2089,7 +2540,7 @@
 				<div class="bigmark rv" style="--d:1">LIGHT <span class="amp">&amp;</span> MATTER</div>
 				<div class="colophon">
 					<span class="mono-xs">Handmade lighting · found wood, brass, salvage · est. 2019</span>
-					<span class="mono-xs">All pieces one of one · Wired by an authorized electrician · &copy;
+					<span class="mono-xs">All pieces one of one · &copy;
 						2026</span>
 				</div>
 			</div>
@@ -2123,6 +2574,35 @@
 		</div>
 	</div>
 
+	<!-- ─────────────────────────── FULL SPECIFICATION (standalone popup, opened from "Full specification" in the deck) -->
+	<div class="fs" id="fs" role="dialog" aria-modal="true" aria-labelledby="fs-title" aria-hidden="true">
+		<div class="fs-scrim" data-fs-close></div>
+		<div class="fs-panel">
+			<div class="fs-gallery">
+				<div class="fs-stage" id="fs-stage" aria-roledescription="carousel">
+					<div class="fs-track" id="fs-track"></div>
+					<button type="button" class="fs-arrow prev" id="fs-prev">&larr;</button>
+					<button type="button" class="fs-arrow next" id="fs-next">&rarr;</button>
+					<span class="fs-count" id="fs-count"></span>
+				</div>
+				<div class="fs-strip">
+					<p class="fs-cap" id="fs-cap" aria-live="polite"></p>
+					<div class="fs-thumbs" id="fs-thumbs"></div>
+				</div>
+			</div>
+			<div class="fs-info">
+				<p class="eyebrow" id="fs-no"></p>
+				<h2 id="fs-title"></h2>
+				<div class="fs-price"><span class="price" id="fs-price"></span><span class="fs-status"
+						id="fs-status"></span></div>
+				<p class="fs-lede" id="fs-lede"></p>
+				<dl class="dl fs-specs" id="fs-specs"></dl>
+				<a class="btn fs-cta" id="fs-cta" href="#contact"></a>
+			</div>
+			<button type="button" class="fs-close" id="fs-close" data-fs-close>&times;</button>
+		</div>
+	</div>
+
 	<script>
 		(function () {
 			var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2132,9 +2612,20 @@
 			var counter = document.getElementById('counter');
 			var current = 0;
 
-			/* ---- hero video: hold on the poster frame for reduced motion ---- */
-			var heroVideo = document.querySelector('#intro .bg video');
-			if (heroVideo && reduce) { heroVideo.removeAttribute('autoplay'); heroVideo.pause(); }
+			/* ---- background videos: hold on the poster frame for reduced motion, play only while on screen ---- */
+			var bgVideos = Array.prototype.slice.call(document.querySelectorAll('.bg video'));
+			bgVideos.forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
+			if (!reduce) {
+				if ('IntersectionObserver' in window) {
+					var vio = new IntersectionObserver(function (entries) {
+						entries.forEach(function (en) {
+							if (en.isIntersecting) { var p = en.target.play(); if (p && p.catch) p.catch(function () { }); }
+							else en.target.pause();
+						});
+					}, { threshold: 0 });
+					bgVideos.forEach(function (v) { vio.observe(v); });
+				} else bgVideos.forEach(function (v) { v.play(); });
+			}
 
 			/* ---- dot navigation ---- */
 			slides.forEach(function (s, i) {
@@ -2223,7 +2714,7 @@
 						else if (dy > aEnd - y) { e.preventDefault(); jump(aEnd); }
 						return;
 					}
-					if (!slides[a + 1]) return;
+					if (!slides[a + 1]) { e.preventDefault(); consumed = true; return; } // the last section: nowhere to go, so no rubber-band bounce
 					target = slides[a + 1].offsetTop;
 				} else {
 					if (y > aTop + 1 && y <= aEnd + 1) {
@@ -2233,7 +2724,7 @@
 					}
 					if (y > aEnd + 1) target = aEnd;      // caught between two sections
 					else if (a > 0) target = endOf(slides[a - 1]);
-					else return;
+					else { e.preventDefault(); consumed = true; return; }
 				}
 				e.preventDefault();                     // any movement of the wheel, however slight, moves one section
 				consumed = true;
@@ -2556,7 +3047,7 @@
 				'A branch lamp lit at night, brass socket and bare Edison bulb over a bark-edged log base': 'O lampă din creangă aprinsă noaptea, dulie de alamă și bec Edison fără abajur deasupra unei baze din buștean cu scoarță',
 
 				// 02 collection
-				'02 · The collection': '02 · Colecția',
+				'The collection': 'Colecția',
 				'Each one started<br>as something else.': 'Fiecare a început<br>ca altceva.',
 				'One found object per lamp, never a pair. Open a lamp to leaf through its photographs.': 'Un singur obiect găsit pentru fiecare lampă, niciodată perechi. Deschide o lampă ca să-i răsfoiești fotografiile.',
 				'The Arc · open 4 photographs': 'Arcul · deschide 4 fotografii',
@@ -2585,7 +3076,7 @@
 				'460 × 240 mm · in the studio': '460 × 240 mm · în atelier',
 
 				// 03 materials
-				'03 · Where it comes from': '03 · De unde vine',
+				'Where it comes from': 'De unde vine',
 				'Three sources,<br>no catalogue.': 'Trei surse,<br>niciun catalog.',
 				'Nothing is bought new except the socket, the flex and the oil. Everything else is found, and what it was stays visible.': 'Nimic nu e cumpărat nou în afară de dulie, cablu și ulei. Restul e găsit, iar ce a fost cândva rămâne la vedere.',
 				'Found wood': 'Lemn găsit',
@@ -2609,7 +3100,7 @@
 
 				// 04 specification
 				'The Arc photographed indoors in daylight, showing the rope, brass socket and log base': 'Arcul fotografiat în casă, la lumina zilei: frânghia, dulia de alamă și baza din buștean',
-				'04 · Specification': '04 · Specificații',
+				'Specification': 'Specificații',
 				'The branch spent nine months drying in a shed before it was stable enough to trust. It sits in a blind mortise cut into the log slice: no bracket, no visible screw. The rope is not decoration: it carries the flex from socket to base, and it is what you take hold of when you move the lamp.': 'Creanga a stat nouă luni la uscat într-un șopron până a devenit destul de stabilă cât să mă pot baza pe ea. E prinsă într-un lăcaș orb tăiat în felia de buștean: fără suport, fără vreun șurub la vedere. Frânghia nu e decor: duce cablul de la dulie până la bază și de ea apuci lampa când o muți.',
 				'Height': 'Înălțime', 'Arm': 'Braț', 'Base': 'Bază', 'Socket': 'Dulie', 'Bulb': 'Bec', 'Cord': 'Cablu', 'Weight': 'Greutate', 'Price': 'Preț',
 				'<b>420–480 mm</b> · base Ø 200–240 mm': '<b>420–480 mm</b> · bază Ø 200–240 mm',
@@ -2622,7 +3113,7 @@
 				'<b>€240–290</b>, depends on the branch, one of one': '<b>€240–290</b>, depinde de creangă, unicat',
 
 				// 05 workbook
-				'05 · Drawn, not yet built': '05 · Desenate, încă neconstruite',
+				'Drawn, not yet built': 'Desenate, încă neconstruite',
 				'From the workbook.': 'Din caietul de lucru.',
 				'Pieces with the metal already in the shop and the wood still drying. Any of the three can be built to order. The drawing is the agreement, the lamp will differ where the material insists.': 'Piese pentru care metalul e deja în atelier, iar lemnul încă se usucă. Oricare dintre ele poate fi făcută la comandă. Desenul e înțelegerea noastră, lampa va diferi acolo unde materialul insistă.',
 				'Drawing · to order': 'Desen · la comandă',
@@ -2640,7 +3131,7 @@
 				'Ø310 × 260 mm · 5 weeks': 'Ø310 × 260 mm · 5 săptămâni',
 
 				// 06 process
-				'06 · How a lamp happens': '06 · Cum se naște o lampă',
+				'How a lamp happens': 'Cum se naște o lampă',
 				'Nine months of waiting,<br>two weeks of work.': 'Nouă luni de așteptare,<br>două săptămâni de lucru.',
 				'The order matters. Skip the drying and the wood splits around the socket a year later, in someone\'s living room.': 'Ordinea contează. Sari peste uscare și lemnul crapă în jurul duliei un an mai târziu, în sufrageria cuiva.',
 				'Finding': 'Căutarea',
@@ -2663,7 +3154,7 @@
 				'4 days': '4 zile',
 
 				// 07 workshop
-				'07 · The workshop': '07 · Atelierul',
+				'The workshop': 'Atelierul',
 				'One bench,<br>one pair of hands.': 'Un banc de lucru,<br>o pereche de mâini.',
 				'The bench is outside, under a walnut, and it stays there until November. That is most of why these lamps look the way they do: the wood is found within a morning\'s walk of where it gets cut, and the first time a finished lamp is switched on, it is switched on in the yard.': 'Bancul de lucru e afară, sub un nuc, și stă acolo până în noiembrie. De aici vine mare parte din felul în care arată lămpile astea: lemnul e găsit la o dimineață de mers pe jos de locul unde e tăiat, iar prima dată când o lampă terminată e aprinsă, e aprinsă în curte.',
 				'I don\'t make series. Two lamps off the same tree will still be two different lamps, and if you ask me for a matching pair I\'ll tell you honestly which one to take. What you get is a signed piece, a written note of where every part of it came from, and someone who will rewire it for you in ten years.': 'Nu fac serii. Două lămpi din același copac tot două lămpi diferite vor fi, iar dacă îmi ceri o pereche asortată îți spun sincer pe care s-o iei. Primești o piesă semnată, o notă scrisă despre proveniența fiecărei părți și pe cineva care îți va reface instalația peste zece ani.',
@@ -2681,7 +3172,7 @@
 				'Free, for life': 'Gratuit, pe viață',
 
 				// 08 commissions
-				'08 · Commissions': '08 · Comenzi',
+				'Commissions': 'Comenzi',
 				'Bring me the object.': 'Adu-mi obiectul.',
 				'A grandfather\'s tool, a part off the car you sold, a branch you carried home from a holiday. It works best when the material already means something.': 'O unealtă a bunicului, o piesă de la mașina pe care ai vândut-o, o creangă adusă acasă dintr-o vacanță. Iese cel mai bine când materialul înseamnă deja ceva.',
 				'Send a photo': 'Trimite o fotografie',
@@ -2695,12 +3186,11 @@
 				'3 – 5 weeks': '3 – 5 săptămâni',
 
 				// 09 contact
-				'09 · Write': '09 · Scrie-mi',
 				'The bench is outside,<br>under the walnut.': 'Bancul de lucru e afară,<br>sub nuc.',
 				'Write': 'Scrie-mi',
 				'Answered within two days, usually in the evening.': 'Răspund în două zile, de obicei seara.',
 				'Handmade lighting · found wood, brass, salvage · est. 2019': 'Lămpi lucrate manual · lemn găsit, alamă, recuperări · din 2019',
-				'All pieces one of one · Wired by an authorized electrician · © 2026': 'Toate piesele sunt unicat · Instalație făcută de un electrician autorizat · © 2026',
+				'All pieces one of one · © 2026': 'Toate piesele sunt unicat · Instalație făcută de un electrician autorizat · © 2026',
 
 				// the photograph deck
 				'Full specification →': 'Specificații complete →',
@@ -2799,6 +3289,337 @@
 			}, { passive: true });
 			window.addEventListener('resize', paint);
 			paint();
+		})();
+	</script>
+
+	<!-- ---------- full specification popup (standalone: own data, own strings, own carousel) ---------- -->
+	<script>
+		(function () {
+			// Each piece's full sheet. A photo without a src shows the card's drawing instead.
+			var SPECS = {
+				arc: {
+					no: '01', name: 'The Arc', price: '€240–290', status: 'Built to the branch · 3–5 weeks',
+					lede: 'The branch spent nine months drying in a shed before it was stable enough to trust. It sits in a blind mortise cut into the log slice: no bracket, no visible screw. The rope is not decoration: it carries the flex from socket to base, and it is what you take hold of when you move the lamp.',
+					rows: [
+						['Height', '<b>420–480 mm</b> · base Ø 200–240 mm'],
+						['Arm', 'Weathered hardwood branch, cured 9 months, oiled'],
+						['Base', 'Slice off a fallen trunk, bark left on, felt-footed'],
+						['Socket', 'Brass E27, knurled shell, key switch on the socket'],
+						['Bulb', '<b>4 W</b> filament LED · <b>2700 K</b> · dimmable · included'],
+						['Cord', '2 m black braided flex in hemp rope, inline switch'],
+						['Weight', '<b>2.1–2.8 kg</b>'],
+						['Price', '<b>€240–290</b>, depends on the branch, one of one']
+					],
+					photos: [
+						{ src: 'assets/arc-lit.jpg', title: 'Lit', cap: 'Squirrel-cage filament, 2700 K, dimmed to about half.', alt: 'The Arc at night, the filament lit, throwing warm light across the wall' },
+						{ src: 'assets/arc-bench.jpg', title: 'On the bench', cap: 'Finished that afternoon. Globe bulb, hemp rope run the length of the branch.', alt: 'The Arc on a workbench beside screwdrivers and tape, globe bulb hanging from a brass socket' },
+						{ src: 'assets/arc-garden.jpg', title: 'In the yard', cap: 'Antique-brass socket with a key switch. The branch was dry by May.', alt: 'The Arc outdoors in a garden, the workshop building behind it' },
+						{ src: 'assets/arc-room.jpg', title: 'In the room', cap: 'ST64 amber bulb. 280 mm of shelf, and it holds the whole corner.', alt: 'The Arc indoors on a shelf next to framed pictures, unlit, with an amber Edison bulb' }
+					]
+				},
+				trumpet: {
+					no: '02', name: 'The Trumpet', price: '€340', status: 'One of one · in the studio',
+					lede: 'Retired from a brass band with its valves still moving. The lacquer is worn exactly where the hands held it, and it stays that way. The bell sits in a recess turned into the plinth, and the flex runs up the leadpipe to the shade, so no wire crosses the brass.',
+					rows: [
+						['Height', '<b>approx. 800 mm</b> · shade Ø 400 mm'],
+						['Body', 'B-flat trumpet, original lacquer, valves still working'],
+						['Base', 'Turned wooden plinth, bell seated in a recess, felt-footed'],
+						['Shade', 'Pleated fabric drum, Ø 400 mm'],
+						['Socket', 'Brass E27 under the shade'],
+						['Bulb', '<b>6 W</b> filament LED · <b>2700 K</b> · dimmable · included'],
+						['Cord', '2 m black braided flex along the leadpipe, inline switch'],
+						['Weight', '<b>approx. 3.5 kg</b>'],
+						['Price', '<b>€340</b>, one of one']
+					],
+					photos: [
+						{ src: 'assets/trumpet.jpg', title: 'In the corner', cap: 'Lit at dusk beside the sofa. The bell sits in a turned wooden plinth.', alt: 'The Trumpet lamp lit beside a sofa, standing on its bell on a round wooden plinth' },
+						{ src: 'assets/trumpet-valves.jpg', title: 'The valves', cap: 'Left as they came out of the case: worn lacquer, pistons that still press.', alt: 'Close view of the trumpet valves and tubing under the lamp shade' },
+						{ src: 'assets/trumpet-shade.jpg', title: 'The shade', cap: 'A pleated drum over a warm filament. The weave throws a soft grid of light.', alt: 'The pleated drum shade glowing warm above the trumpet' }
+					]
+				},
+				insulator: {
+					no: '03', name: 'Insulator', price: '<s>€180</s>', status: 'Sold · a similar one can be made', sold: true,
+					lede: 'Taken off a 1950s telegraph line pole, the green glass still carries its mould seams and a little of the weather. A walnut cap turned to fit the glass hides the lampholder, and the braided flex is cut to your ceiling. This one is sold; the next will be made from a different insulator, so no two are the same.',
+					rows: [
+						['Size', '<b>Ø 90 × 110 mm</b> · drop up to 1.5 m'],
+						['Glass', 'Green pressed-glass telegraph insulator, 1950s'],
+						['Cap', 'Turned walnut, oiled'],
+						['Socket', 'Brass E14, hidden in the walnut cap'],
+						['Bulb', '<b>2 W</b> filament globe · <b>2700 K</b> · included'],
+						['Cord', 'Braided textile flex, <b>up to 1.5 m</b>, ceiling rose included'],
+						['Weight', '<b>approx. 0.6 kg</b>'],
+						['Price', '<b>€180</b>, sold · a similar one can be made']
+					],
+					photos: [
+						{ title: 'Front', cap: 'Photograph to come.' },
+						{ title: 'The glass', cap: 'Photograph to come.' },
+						{ title: 'Lit', cap: 'Photograph to come.' }
+					]
+				},
+				sextant: {
+					no: '04', name: 'Sextant', price: '€320', status: 'Available · in the studio',
+					lede: 'The brass arc came from a ship’s sextant that had lost its mirrors. The vernier scale is still engraved along the edge, and now it carries the light out over the desk. The foot is a block of oak, heavy enough that the arm needs no counterweight.',
+					rows: [
+						['Size', '<b>460 × 240 mm</b>'],
+						['Arm', 'Brass sextant arc, vernier scale intact, clear-lacquered'],
+						['Base', 'Oak foot, oiled, felt underside'],
+						['Shade', 'Spun steel cone'],
+						['Socket', 'Brass E27 inside the cone'],
+						['Bulb', '<b>4 W</b> filament LED · <b>2700 K</b> · dimmable · included'],
+						['Cord', '2 m black braided flex, inline switch'],
+						['Weight', '<b>approx. 1.8 kg</b>'],
+						['Price', '<b>€320</b>, one of one']
+					],
+					photos: [
+						{ title: 'Front', cap: 'Photograph to come.' },
+						{ title: 'The scale', cap: 'Photograph to come.' },
+						{ title: 'Lit', cap: 'Photograph to come.' }
+					]
+				}
+			};
+
+			// Romanian, keyed by the English above. The popup opens in whatever language the page is in at that moment.
+			var RO = {
+				'Full specification · ': 'Specificații complete · ',
+				'Close': 'Închide', 'Previous photograph': 'Fotografia anterioară', 'Next photograph': 'Fotografia următoare',
+				'Photograph': 'Fotografia', 'Photograph to come': 'Fotografie în curând', 'Photograph to come.': 'Fotografie în curând.',
+				'Enquire about this piece': 'Întreabă de această piesă', 'Commission a similar one': 'Comandă una asemănătoare',
+				'The Arc': 'Arcul', 'The Trumpet': 'Trompeta', 'Insulator': 'Izolatorul', 'Sextant': 'Sextantul',
+				'Built to the branch · 3–5 weeks': 'După forma crengii · 3–5 săptămâni',
+				'One of one · in the studio': 'Unicat · în atelier',
+				'Sold · a similar one can be made': 'Vândut · se poate face unul asemănător',
+				'Available · in the studio': 'Disponibil · în atelier',
+
+				'Height': 'Înălțime', 'Arm': 'Braț', 'Base': 'Bază', 'Socket': 'Dulie', 'Bulb': 'Bec', 'Cord': 'Cablu', 'Weight': 'Greutate', 'Price': 'Preț',
+				'Body': 'Corp', 'Shade': 'Abajur', 'Size': 'Dimensiuni', 'Glass': 'Sticlă', 'Cap': 'Capac',
+
+				// the arc
+				'The branch spent nine months drying in a shed before it was stable enough to trust. It sits in a blind mortise cut into the log slice: no bracket, no visible screw. The rope is not decoration: it carries the flex from socket to base, and it is what you take hold of when you move the lamp.': 'Creanga a stat nouă luni la uscat într-un șopron până a devenit destul de stabilă cât să mă pot baza pe ea. E prinsă într-un lăcaș orb tăiat în felia de buștean: fără suport, fără vreun șurub la vedere. Frânghia nu e decor: duce cablul de la dulie până la bază și de ea apuci lampa când o muți.',
+				'<b>420–480 mm</b> · base Ø 200–240 mm': '<b>420–480 mm</b> · bază Ø 200–240 mm',
+				'Weathered hardwood branch, cured 9 months, oiled': 'Creangă de esență tare tocită de vreme, uscată 9 luni, uleiată',
+				'Slice off a fallen trunk, bark left on, felt-footed': 'Felie dintr-un trunchi căzut, cu scoarță, tălpi de pâslă',
+				'Brass E27, knurled shell, key switch on the socket': 'E27 din alamă, carcasă zimțată, comutator rotativ pe dulie',
+				'<b>4 W</b> filament LED · <b>2700 K</b> · dimmable · included': 'LED cu filament <b>4 W</b> · <b>2700 K</b> · dimabil · inclus',
+				'2 m black braided flex in hemp rope, inline switch': '2 m de cablu textil negru în frânghie de cânepă, întrerupător pe fir',
+				'<b>2.1–2.8 kg</b>': '<b>2,1–2,8 kg</b>',
+				'<b>€240–290</b>, depends on the branch, one of one': '<b>€240–290</b>, depinde de creangă, unicat',
+				'Lit': 'Aprinsă', 'On the bench': 'Pe bancul de lucru', 'In the yard': 'În curte', 'In the room': 'În cameră',
+				'Squirrel-cage filament, 2700 K, dimmed to about half.': 'Filament „colivie”, 2700 K, redus cam la jumătate.',
+				'The Arc at night, the filament lit, throwing warm light across the wall': 'Arcul noaptea, cu filamentul aprins, aruncând lumină caldă pe perete',
+				'Finished that afternoon. Globe bulb, hemp rope run the length of the branch.': 'Terminată în aceeași după-amiază. Bec glob, frânghie de cânepă pe toată lungimea crengii.',
+				'The Arc on a workbench beside screwdrivers and tape, globe bulb hanging from a brass socket': 'Arcul pe bancul de lucru, lângă șurubelnițe și bandă adezivă, cu un bec glob atârnând dintr-o dulie de alamă',
+				'Antique-brass socket with a key switch. The branch was dry by May.': 'Dulie din alamă patinată, cu comutator rotativ. Până în mai, creanga era uscată.',
+				'The Arc outdoors in a garden, the workshop building behind it': 'Arcul afară, în grădină, cu clădirea atelierului în spate',
+				'ST64 amber bulb. 280 mm of shelf, and it holds the whole corner.': 'Bec ST64 chihlimbariu. 280 mm de raft și umple tot colțul.',
+				'The Arc indoors on a shelf next to framed pictures, unlit, with an amber Edison bulb': 'Arcul în casă, pe un raft lângă tablouri înrămate, stins, cu un bec Edison chihlimbariu',
+
+				// the trumpet
+				'Retired from a brass band with its valves still moving. The lacquer is worn exactly where the hands held it, and it stays that way. The bell sits in a recess turned into the plinth, and the flex runs up the leadpipe to the shade, so no wire crosses the brass.': 'Retrasă dintr-o fanfară, cu pistoanele încă mobile. Lacul e tocit exact acolo unde au ținut-o mâinile și așa rămâne. Pavilionul stă într-un lăcaș strunjit în soclu, iar cablul urcă pe țeava de suflat până la abajur, așa că niciun fir nu trece peste alamă.',
+				'<b>approx. 800 mm</b> · shade Ø 400 mm': '<b>cca. 800 mm</b> · abajur Ø 400 mm',
+				'B-flat trumpet, original lacquer, valves still working': 'Trompetă în si bemol, lac original, pistoane funcționale',
+				'Turned wooden plinth, bell seated in a recess, felt-footed': 'Soclu de lemn strunjit, pavilionul așezat într-un lăcaș, tălpi de pâslă',
+				'Pleated fabric drum, Ø 400 mm': 'Cilindru plisat din material textil, Ø 400 mm',
+				'Brass E27 under the shade': 'E27 din alamă, sub abajur',
+				'<b>6 W</b> filament LED · <b>2700 K</b> · dimmable · included': 'LED cu filament <b>6 W</b> · <b>2700 K</b> · dimabil · inclus',
+				'2 m black braided flex along the leadpipe, inline switch': '2 m de cablu textil negru de-a lungul țevii de suflat, întrerupător pe fir',
+				'<b>approx. 3.5 kg</b>': '<b>cca. 3,5 kg</b>',
+				'<b>€340</b>, one of one': '<b>€340</b>, unicat',
+				'In the corner': 'În colț', 'The valves': 'Pistoanele', 'The shade': 'Abajurul',
+				'Lit at dusk beside the sofa. The bell sits in a turned wooden plinth.': 'Aprinsă la apus, lângă canapea. Pavilionul stă într-un soclu de lemn strunjit.',
+				'The Trumpet lamp lit beside a sofa, standing on its bell on a round wooden plinth': 'Lampa Trompeta aprinsă lângă o canapea, sprijinită pe pavilion pe un soclu rotund de lemn',
+				'Left as they came out of the case: worn lacquer, pistons that still press.': 'Lăsate cum au ieșit din cutie: lac tocit, pistoane care încă se apasă.',
+				'Close view of the trumpet valves and tubing under the lamp shade': 'Detaliu cu pistoanele și țevile trompetei sub abajur',
+				'A pleated drum over a warm filament. The weave throws a soft grid of light.': 'Un cilindru plisat peste un filament cald. Țesătura aruncă o rețea fină de lumină.',
+				'The pleated drum shade glowing warm above the trumpet': 'Abajurul plisat strălucind cald deasupra trompetei',
+
+				// the insulator
+				'Taken off a 1950s telegraph line pole, the green glass still carries its mould seams and a little of the weather. A walnut cap turned to fit the glass hides the lampholder, and the braided flex is cut to your ceiling. This one is sold; the next will be made from a different insulator, so no two are the same.': 'Luat de pe un stâlp de telegraf din anii ’50, sticla verde încă poartă cusăturile matriței și un pic din vremea de afară. Un capac din nuc, strunjit pe măsura sticlei, ascunde dulia, iar cablul textil e tăiat pe înălțimea tavanului tău. Acesta e vândut; următorul va fi făcut dintr-un alt izolator, așa că niciunul nu seamănă cu altul.',
+				'<b>Ø 90 × 110 mm</b> · drop up to 1.5 m': '<b>Ø 90 × 110 mm</b> · lungime până la 1,5 m',
+				'Green pressed-glass telegraph insulator, 1950s': 'Izolator de telegraf din sticlă presată verde, anii ’50',
+				'Turned walnut, oiled': 'Nuc strunjit, uleiat',
+				'Brass E14, hidden in the walnut cap': 'E14 din alamă, ascunsă în capacul de nuc',
+				'<b>2 W</b> filament globe · <b>2700 K</b> · included': 'Glob cu filament <b>2 W</b> · <b>2700 K</b> · inclus',
+				'Braided textile flex, <b>up to 1.5 m</b>, ceiling rose included': 'Cablu textil împletit, <b>până la 1,5 m</b>, rozetă de tavan inclusă',
+				'<b>approx. 0.6 kg</b>': '<b>cca. 0,6 kg</b>',
+				'<b>€180</b>, sold · a similar one can be made': '<b>€180</b>, vândut · se poate face unul asemănător',
+				'Front': 'Față', 'The glass': 'Sticla', 'The scale': 'Scala',
+
+				// the sextant
+				'The brass arc came from a ship’s sextant that had lost its mirrors. The vernier scale is still engraved along the edge, and now it carries the light out over the desk. The foot is a block of oak, heavy enough that the arm needs no counterweight.': 'Arcul de alamă vine de la un sextant de navă care își pierduse oglinzile. Scala vernierului e încă gravată pe margine, iar acum duce lumina deasupra biroului. Piciorul e un bloc de stejar, destul de greu cât brațul să nu aibă nevoie de contragreutate.',
+				'<b>460 × 240 mm</b>': '<b>460 × 240 mm</b>',
+				'Brass sextant arc, vernier scale intact, clear-lacquered': 'Arc de sextant din alamă, scala vernierului intactă, lăcuit transparent',
+				'Oak foot, oiled, felt underside': 'Picior de stejar, uleiat, pâslă dedesubt',
+				'Spun steel cone': 'Con din oțel fasonat',
+				'Brass E27 inside the cone': 'E27 din alamă, în interiorul conului',
+				'2 m black braided flex, inline switch': '2 m de cablu textil negru, întrerupător pe fir',
+				'<b>approx. 1.8 kg</b>': '<b>cca. 1,8 kg</b>',
+				'<b>€320</b>, one of one': '<b>€320</b>, unicat'
+			};
+			var ro = false;
+			function tr(s) { return ro && RO[s] || s; }
+
+			var fs = document.getElementById('fs'), lb = document.getElementById('lb'), more = document.getElementById('lb-more');
+			var stage = document.getElementById('fs-stage'), track = document.getElementById('fs-track');
+			var thumbs = document.getElementById('fs-thumbs'), cap = document.getElementById('fs-cap'), count = document.getElementById('fs-count');
+			var prev = document.getElementById('fs-prev'), next = document.getElementById('fs-next'), closeBtn = document.getElementById('fs-close');
+			var cta = document.getElementById('fs-cta'), info = fs.querySelector('.fs-info'), panel = fs.querySelector('.fs-panel');
+			var isOpen = false, key = null, piece = null, cur = 0, slides = [], tabs = [], drag = null;
+
+			// the deck decides which piece is showing; keep the link visible for every piece and remember which one
+			Array.prototype.forEach.call(document.querySelectorAll('.lot[data-piece] .stack'), function (stack) {
+				stack.addEventListener('click', function () {
+					key = stack.closest('.lot').dataset.piece;
+					more.hidden = !SPECS[key];
+					more.setAttribute('href', '#fs');
+				});
+			});
+			more.addEventListener('click', function (e) {
+				e.preventDefault();
+				if (SPECS[key]) open(key);
+			});
+
+			function drawing(ph, withLabels) {
+				var d = document.createElement('div');
+				d.className = 'fs-drawn';
+				if (withLabels) d.innerHTML = '<span class="stamp">' + tr('Photograph to come') + '</span><span class="view">' + tr(ph.title) + '</span>';
+				var svg = document.querySelector('.lot[data-piece="' + key + '"] .s0 svg');
+				if (svg) d.appendChild(svg.cloneNode(true));
+				return d;
+			}
+
+			function build() {
+				track.innerHTML = ''; thumbs.innerHTML = '';
+				slides = []; tabs = [];
+				piece.photos.forEach(function (ph, i) {
+					var s = document.createElement('div');
+					s.className = 'fs-slide';
+					s.setAttribute('role', 'group');
+					s.setAttribute('aria-roledescription', 'slide');
+					if (ph.src) {
+						var img = new Image(); img.src = ph.src; img.alt = tr(ph.alt || ''); img.decoding = 'async'; img.draggable = false;
+						s.appendChild(img);
+					} else s.appendChild(drawing(ph, true));
+					track.appendChild(s); slides.push(s);
+
+					var b = document.createElement('button');
+					b.type = 'button'; b.className = 'fs-thumb';
+					b.setAttribute('aria-label', tr('Photograph') + ' ' + (i + 1) + ': ' + tr(ph.title));
+					if (ph.src) { var ti = new Image(); ti.src = ph.src; ti.alt = ''; ti.decoding = 'async'; b.appendChild(ti); }
+					else b.appendChild(drawing(ph, false).firstChild || document.createElement('span'));
+					b.addEventListener('click', function () { go(i); });
+					thumbs.appendChild(b); tabs.push(b);
+				});
+				thumbs.hidden = slides.length < 2;
+			}
+
+			function go(i, instant) {
+				var n = slides.length;
+				cur = Math.max(0, Math.min(n - 1, i));
+				if (instant) track.style.transition = 'none';
+				track.style.transform = 'translateX(' + (-cur * 100) + '%)';
+				if (instant) { void track.offsetWidth; track.style.transition = ''; }
+				slides.forEach(function (s, k) { s.setAttribute('aria-hidden', String(k !== cur)); });
+				tabs.forEach(function (b, k) { b.setAttribute('aria-current', String(k === cur)); });
+				if (tabs[cur] && thumbs.scrollWidth > thumbs.clientWidth) thumbs.scrollLeft = tabs[cur].offsetLeft - (thumbs.clientWidth - tabs[cur].offsetWidth) / 2;
+				var ph = piece.photos[cur];
+				cap.innerHTML = '<b>' + tr(ph.title) + '</b>' + tr(ph.cap);
+				count.innerHTML = String(cur + 1).padStart(2, '0') + ' <span>/ ' + String(n).padStart(2, '0') + '</span>';
+				prev.disabled = cur === 0;
+				next.disabled = cur === n - 1;
+				prev.hidden = next.hidden = count.hidden = n < 2;
+			}
+
+			function open(k) {
+				key = k; piece = SPECS[k];
+				ro = document.documentElement.lang === 'ro';
+				fs.setAttribute('lang', ro ? 'ro' : 'en');
+
+				closeBtn.setAttribute('aria-label', tr('Close'));
+				prev.setAttribute('aria-label', tr('Previous photograph'));
+				next.setAttribute('aria-label', tr('Next photograph'));
+				document.getElementById('fs-no').textContent = tr('Full specification · ') + piece.no + ' / ' + String(Object.keys(SPECS).length).padStart(2, '0');
+				document.getElementById('fs-title').textContent = tr(piece.name);
+				document.getElementById('fs-price').innerHTML = piece.price;
+				var st = document.getElementById('fs-status');
+				st.textContent = tr(piece.status); st.classList.toggle('sold', !!piece.sold);
+				document.getElementById('fs-lede').textContent = tr(piece.lede);
+				document.getElementById('fs-specs').innerHTML = piece.rows.map(function (r) { return '<dt>' + tr(r[0]) + '</dt><dd>' + tr(r[1]) + '</dd>'; }).join('');
+				cta.innerHTML = tr(piece.sold ? 'Commission a similar one' : 'Enquire about this piece') + ' &rarr;';
+
+				build();
+				go(0, true);
+				info.scrollTop = 0; panel.scrollTop = 0;
+
+				isOpen = true;
+				lb.inert = true;
+				fs.classList.add('open');
+				fs.setAttribute('aria-hidden', 'false');
+				closeBtn.focus({ preventScroll: true });
+			}
+
+			function close(returnFocus) {
+				if (!isOpen) return;
+				isOpen = false; drag = null;
+				fs.classList.remove('open');
+				fs.setAttribute('aria-hidden', 'true');
+				lb.inert = false;
+				setTimeout(function () { if (!isOpen) { track.innerHTML = ''; thumbs.innerHTML = ''; } }, 650);
+				if (returnFocus) more.focus({ preventScroll: true });
+			}
+
+			fs.addEventListener('click', function (e) { if (e.target.closest('[data-fs-close]')) close(true); });
+			prev.addEventListener('click', function () { go(cur - 1); });
+			next.addEventListener('click', function () { go(cur + 1); });
+			// the enquiry link is an ordinary #contact link: the page's own handler closes the deck and glides there
+			cta.addEventListener('click', function () { close(false); });
+
+			// while open, this popup owns the keyboard: nothing reaches the deck or the page behind it
+			window.addEventListener('keydown', function (e) {
+				if (!isOpen) return;
+				e.stopImmediatePropagation();
+				var k = e.key;
+				if (k === 'Escape') { e.preventDefault(); close(true); }
+				else if (k === 'ArrowRight') { e.preventDefault(); go(cur + 1); }
+				else if (k === 'ArrowLeft') { e.preventDefault(); go(cur - 1); }
+				else if (k === 'Tab') {
+					var f = Array.prototype.filter.call(fs.querySelectorAll('button, a[href]'), function (el) { return !el.disabled && !el.hidden && el.offsetParent !== null; });
+					var first = f[0], last = f[f.length - 1];
+					if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+					else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+				}
+			}, true);
+
+			// swipe or drag the photograph sideways
+			stage.addEventListener('pointerdown', function (e) {
+				if (e.button !== 0 || slides.length < 2 || e.target.closest('button')) return;
+				drag = { x: e.clientX, y: e.clientY, dx: 0, moved: false, lastX: e.clientX, lastT: performance.now(), v: 0, id: e.pointerId };
+			});
+			stage.addEventListener('pointermove', function (e) {
+				if (!drag) return;
+				var dx = e.clientX - drag.x, now = performance.now();
+				if (!drag.moved) {
+					if (Math.abs(dx) < 6) return;
+					if (Math.abs(e.clientY - drag.y) > Math.abs(dx)) { drag = null; return; }
+					drag.moved = true;
+					stage.setPointerCapture(drag.id);
+					stage.classList.add('dragging');
+				}
+				// resist past the first and last photograph
+				if ((cur === 0 && dx > 0) || (cur === slides.length - 1 && dx < 0)) dx *= 0.3;
+				drag.v = (e.clientX - drag.lastX) / Math.max(1, now - drag.lastT);
+				drag.lastX = e.clientX; drag.lastT = now; drag.dx = dx;
+				track.style.transform = 'translateX(calc(' + (-cur * 100) + '% + ' + dx + 'px))';
+			});
+			function endDrag() {
+				if (!drag) return;
+				var d = drag; drag = null;
+				stage.classList.remove('dragging');
+				if (!d.moved) return;
+				if (Math.abs(d.dx) > stage.clientWidth * 0.14 || Math.abs(d.v) > 0.5) go(cur + (d.dx < 0 ? 1 : -1));
+				else go(cur);
+			}
+			stage.addEventListener('pointerup', endDrag);
+			stage.addEventListener('pointercancel', endDrag);
 		})();
 	</script>
 </body>

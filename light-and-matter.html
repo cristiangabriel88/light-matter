@@ -1444,6 +1444,10 @@
 		}
 
 		/* ---------- commissions ---------- */
+		#commissions .steps {
+			grid-template-columns: repeat(3, 1fr)
+		}
+
 		.note {
 			margin-top: clamp(26px, 4vh, 44px);
 			padding: 22px 24px;
@@ -1605,20 +1609,23 @@
 		}
 
 		@media (max-width:620px) {
+			/* one rhythm for every section: the same padding top and bottom, so each gap between sections matches */
 			.slide {
+				--slide-pad: clamp(48px, 7vh, 64px);
 				min-height: auto;
-				padding-block: clamp(52px, 7.5vh, 76px)
+				padding-block: var(--slide-pad)
 			}
 
-			/* the hero copy sits low on the screen, so it runs straight on into the collection with no empty band */
+			/* the hero copy sits centred on the first screen, for impact on arrival */
 			#intro {
-				min-height: 92svh;
-				align-items: flex-end;
-				padding-bottom: 28px
+				min-height: 100svh;
+				align-items: center;
+				padding-block: 24px
 			}
 
+			/* the collection rides up by half the empty band under the hero (measured in the script) */
 			#collection {
-				padding-top: 36px
+				margin-top: calc(var(--hero-pull, 0px) * -1)
 			}
 
 			/* reveals on a phone: shorter travel, quicker, so content is there as fast as a thumb scrolls */
@@ -1635,6 +1642,7 @@
 			.cols-3,
 			.grid-3,
 			.steps,
+			#commissions .steps,
 			.contact-grid {
 				grid-template-columns: 1fr
 			}
@@ -2578,7 +2586,7 @@
 					<p class="lede rv" style="--d:2">A grandfather's tool, a part off a car, a branch you
 						carried home from a holiday. It works best when the material already means something.</p>
 				</div>
-				<div class="steps" style="grid-template-columns:repeat(3,1fr)">
+				<div class="steps">
 					<div class="step rv" style="--d:1"><span class="num">01</span>
 						<div class="step-body">
 							<h3>Send a photo</h3>
@@ -3622,6 +3630,20 @@
 			}, { passive: true });
 			window.addEventListener('resize', paint);
 			paint();
+
+			/* ---- phone: halve the gap between the centred hero and the collection ---- */
+			var phone = window.matchMedia('(max-width:620px)');
+			var intro = document.getElementById('intro'), heroWrap = intro.querySelector('.wrap');
+			var collection = document.getElementById('collection');
+			function pull() {
+				if (!phone.matches) { collection.style.removeProperty('--hero-pull'); return; }
+				var below = intro.offsetHeight - (heroWrap.offsetTop + heroWrap.offsetHeight);
+				var above = parseFloat(getComputedStyle(collection).paddingTop) || 0;
+				collection.style.setProperty('--hero-pull', Math.max(0, (below + above) / 2) + 'px');
+			}
+			window.addEventListener('resize', pull);
+			if (document.fonts && document.fonts.ready) document.fonts.ready.then(pull);
+			pull();
 		})();
 	</script>
 

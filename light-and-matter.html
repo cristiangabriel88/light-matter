@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<title>Light &amp; Matter</title>
+	<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link rel="stylesheet"
@@ -53,7 +54,14 @@
 
 		html {
 			scroll-behavior: smooth;
-			overscroll-behavior-y: none
+			-webkit-tap-highlight-color: transparent
+		}
+
+		/* where the wheel moves one section at a time, no rubber-band bounce; touch keeps its native bounce */
+		@media (min-width:820px) and (min-height:620px) {
+			html {
+				overscroll-behavior-y: none
+			}
 		}
 
 		img,
@@ -460,6 +468,79 @@
 			display: block
 		}
 
+		/* the hero carousel: each new photograph is uncovered left to right by a soft-edged blind */
+		.hero-open {
+			position: absolute;
+			inset: 0;
+			display: block;
+			padding: 0;
+			border: 0;
+			background: none;
+			cursor: pointer;
+			overflow: hidden
+		}
+
+		.hero-open:focus-visible {
+			outline: 2px solid var(--ink);
+			outline-offset: -4px
+		}
+
+		.hero-open img {
+			position: absolute;
+			inset: 0;
+			transform-origin: 50% 60%
+		}
+
+		.hero-open img.leaving {
+			transition: transform 1.3s cubic-bezier(.77, 0, .18, 1), filter 1.3s cubic-bezier(.77, 0, .18, 1);
+			transform: translateX(5%) scale(1.02);
+			filter: brightness(.7)
+		}
+
+		.hero-open img.entering {
+			-webkit-mask-image: linear-gradient(to right, #000 82%, transparent);
+			mask-image: linear-gradient(to right, #000 82%, transparent);
+			-webkit-mask-repeat: no-repeat;
+			mask-repeat: no-repeat;
+			-webkit-mask-position: 0 0;
+			mask-position: 0 0;
+			-webkit-mask-size: 0% 100%;
+			mask-size: 0% 100%;
+			transform: scale(1.08)
+		}
+
+		.hero-open img.entering.go {
+			transition: -webkit-mask-size 1.3s cubic-bezier(.77, 0, .18, 1), mask-size 1.3s cubic-bezier(.77, 0, .18, 1), transform 2.2s var(--ease);
+			-webkit-mask-size: 125% 100%;
+			mask-size: 125% 100%;
+			transform: none
+		}
+
+		.hero-open {
+			touch-action: pan-y;
+			-webkit-user-select: none;
+			user-select: none
+		}
+
+		.hero-open.dragging {
+			cursor: grabbing
+		}
+
+		.hero-photo .photo-tag {
+			z-index: 2;
+			pointer-events: none
+		}
+
+		.hero-photo .photo-tag span {
+			display: inline-block;
+			transition: opacity .45s var(--ease), transform .45s var(--ease)
+		}
+
+		.hero-photo .photo-tag.swap span {
+			opacity: 0;
+			transform: translateY(4px)
+		}
+
 		.photo-tag {
 			position: absolute;
 			left: 0;
@@ -493,7 +574,7 @@
 			border: 1px solid var(--ink);
 			color: var(--paper);
 			background: var(--ink);
-			transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+			transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
 			cursor: pointer
 		}
 
@@ -501,6 +582,11 @@
 			background: var(--glow);
 			border-color: var(--glow);
 			color: #1A1206
+		}
+
+		.btn:active {
+			transform: scale(.97);
+			transition-duration: .08s
 		}
 
 		.btn.ghost {
@@ -947,6 +1033,11 @@
 
 		.card.held {
 			transition: none
+		}
+
+		/* a let-go photo springs back to the pile, overshooting a touch before it settles */
+		.card.settling {
+			transition: transform .8s cubic-bezier(.34, 1.4, .56, 1), opacity .55s var(--ease), filter .7s var(--ease)
 		}
 
 		.lb-info {
@@ -1516,11 +1607,29 @@
 		@media (max-width:620px) {
 			.slide {
 				min-height: auto;
-				padding-block: clamp(64px, 9vh, 90px)
+				padding-block: clamp(52px, 7.5vh, 76px)
 			}
 
+			/* the hero copy sits low on the screen, so it runs straight on into the collection with no empty band */
 			#intro {
-				min-height: 100svh
+				min-height: 92svh;
+				align-items: flex-end;
+				padding-bottom: 28px
+			}
+
+			#collection {
+				padding-top: 36px
+			}
+
+			/* reveals on a phone: shorter travel, quicker, so content is there as fast as a thumb scrolls */
+			.rv {
+				transform: translate3d(0, 12px, 0);
+				transition-duration: .55s;
+				transition-delay: calc(var(--d, 0)*50ms)
+			}
+
+			.rv.in {
+				transform: none
 			}
 
 			.cols-3,
@@ -1554,6 +1663,13 @@
 			}
 
 			.hero-photo {
+				display: none
+			}
+		}
+
+		/* arrow keys mean nothing to a finger */
+		@media (hover:none) and (pointer:coarse) {
+			.hint {
 				display: none
 			}
 		}
@@ -2078,9 +2194,10 @@
 					</div>
 				</div>
 				<figure class="hero-photo hero-el" style="--d:2;margin:0">
-					<img src="assets/arc/arc-lit.jpg"
-						alt="A branch lamp lit at night, brass socket and bare Edison bulb over a bark-edged log base">
-					<figcaption class="photo-tag">The Arc · 2700 K, after dark</figcaption>
+					<button class="hero-open" type="button" aria-label="The Arc · open 4 photographs"><img
+							src="assets/arc/arc-lit.jpg"
+							alt="The Arc at night, the filament lit, throwing warm light across the wall"></button>
+					<figcaption class="photo-tag" id="hero-tag"><span>The Arc · Lit</span></figcaption>
 				</figure>
 			</div>
 		</section>
@@ -2677,7 +2794,8 @@
 				stop();
 				var from = window.scrollY, dist = y - from;
 				if (reduce || Math.abs(dist) < 2) { jump(y); restY = y; return; }
-				var dur = Math.min(720, 480 + Math.abs(dist) * 0.08), t0 = performance.now();
+				// a phone gets a quicker glide: long pages, short attention, and a thumb that wants to feel in charge
+				var dur = snapOn() ? Math.min(720, 480 + Math.abs(dist) * 0.08) : Math.min(560, 340 + Math.abs(dist) * 0.05), t0 = performance.now();
 				revealAt(y);
 				anim = { to: y };
 				anim.raf = requestAnimationFrame(function step(now) {
@@ -2756,7 +2874,7 @@
 			}
 
 			function onScrollSettle() {
-				if (anim) return;
+				if (anim || !snapOn()) return;
 				clearTimeout(settleTimer);
 				settleTimer = setTimeout(settle, 'onscrollend' in window ? 400 : 140);
 			}
@@ -2898,7 +3016,7 @@
 				if (dir > 0) {
 					var out = cards[cur];
 					cur = (cur + 1) % n;
-					out.classList.remove('held');
+					out.classList.remove('held', 'settling');
 					out.classList.add('tossing');
 					tossPose(out, side || -1);
 					layout(out);
@@ -2920,9 +3038,9 @@
 			}
 
 			var lbPiece = null;
-			function openDeck(lot, from) {
+			function openDeck(lot, from, start) {
 				var key = lot.dataset.piece, p = PIECES[key];
-				lbPiece = key; lbReturn = from; cur = 0;
+				lbPiece = key; lbReturn = from; cur = start || 0;
 				deck.innerHTML = '';
 				cards = p.photos.map(function (ph, i) { return cardFor(lot, p, ph, i); });
 				cards.forEach(function (c) { c.classList.add('held'); deck.appendChild(c); });
@@ -2946,15 +3064,17 @@
 				// deal the photographs in: each rises from below and lands on the pile, the top one last
 				var n = cards.length, H = deck.clientHeight;
 				cards.forEach(function (c, i) {
-					place(c, i);
-					pose(c, i, (i % 2 ? 1 : -1) * 30, H * 0.55, c._j * 5, 0.92);
+					var k = (i - cur + n) % n;
+					place(c, k);
+					pose(c, k, (k % 2 ? 1 : -1) * 30, H * 0.55, c._j * 5, 0.92);
 					c.style.opacity = '0';
 				});
 				void deck.offsetWidth;
 				cards.forEach(function (c, i) {
-					c.style.transitionDelay = (140 + Math.max(0, 2 - Math.min(i, 2)) * 90) + 'ms';
+					var k = (i - cur + n) % n;
+					c.style.transitionDelay = (140 + Math.max(0, 2 - Math.min(k, 2)) * 90) + 'ms';
 					c.classList.remove('held');
-					place(c, i);
+					place(c, k);
 					setTimeout(function () { c.style.transitionDelay = ''; }, 1200);
 				});
 				document.getElementById('lb-close').focus({ preventScroll: true });
@@ -2968,6 +3088,7 @@
 				document.documentElement.style.overflow = '';
 				setTimeout(function () { if (!lbOpen) deck.innerHTML = ''; }, 650);
 				if (lbReturn) lbReturn.focus({ preventScroll: true });
+				heroRun();
 			}
 
 			lb.addEventListener('click', function (e) { if (e.target.closest('[data-close]')) closeDeck(); });
@@ -3003,17 +3124,31 @@
 				drag.lastX = e.clientX; drag.lastT = now;
 				drag.moved = true; drag.dx = dx;
 				deck.classList.add('dragging');
+				clearTimeout(drag.c._s);
+				drag.c.classList.remove('settling');
 				drag.c.classList.add('held');
+				// a lone photo has nowhere to go: it gives a little, then pulls against the hand
+				if (cards.length < 2) {
+					var R = deck.clientWidth * 0.5;
+					dx = (dx < 0 ? -1 : 1) * R * (1 - 1 / (Math.abs(dx) * 0.55 / R + 1));
+					dy = dy * 0.5;
+				}
 				pose(drag.c, 0, dx, dy * 0.2, dx * 0.045, 1);
 			});
+			function settle(c) {
+				c.classList.add('settling');
+				layout();
+				clearTimeout(c._s);
+				c._s = setTimeout(function () { c.classList.remove('settling'); }, 800);
+			}
 			function endDrag() {
 				if (!drag) return;
 				var d = drag; drag = null;
 				deck.classList.remove('dragging');
 				d.c.classList.remove('held');
 				if (!d.moved) { flip(1); return; }
-				if (Math.abs(d.dx) > deck.clientWidth * 0.14 || Math.abs(d.v) > 0.55) flip(1, d.dx < 0 ? -1 : 1);
-				else layout();
+				if (cards.length > 1 && (Math.abs(d.dx) > deck.clientWidth * 0.14 || Math.abs(d.v) > 0.55)) flip(1, d.dx < 0 ? -1 : 1);
+				else settle(d.c);
 			}
 			deck.addEventListener('pointerup', endDrag);
 			deck.addEventListener('pointercancel', endDrag);
@@ -3034,8 +3169,6 @@
 				'See the work': 'Vezi lucrările',
 				'Commission a piece': 'Comandă o piesă',
 				'<span class="key">←</span><span class="key">→</span> to move through the studio': '<span class="key">←</span><span class="key">→</span> ca să te plimbi prin atelier',
-				'The Arc · 2700 K, after dark': 'Arcul · 2700 K, după lăsarea serii',
-				'A branch lamp lit at night, brass socket and bare Edison bulb over a bark-edged log base': 'O lampă din creangă aprinsă noaptea, dulie de alamă și bec Edison fără abajur deasupra unei baze din buștean cu scoarță',
 
 				// 02 collection
 				'The collection': 'Colecția',
@@ -3135,12 +3268,12 @@
 				'Rope and wiring': 'Frânghia și instalația',
 				'Hemp rope spiralled from socket to base with the flex inside it. Strain relief at both ends, then continuity- and insulation-tested before it leaves.': 'Frânghie de cânepă înfășurată în spirală de la dulie la bază, cu cablul în interior. Protecție la smulgere la ambele capete, apoi test de continuitate și de izolație înainte să plece.',
 				'Finish': 'Finisajul',
-				'Three coats of hardwax oil, 24 hours between, cut back with sandpaper. No stain, ever. That honey colour is the wood and the oil, nothing else.': 'Trei straturi de ulei cu ceară dură, la 24 de ore distanță, șlefuite cu glaspapir. Niciodată baiț. Culoarea aceea de miere e lemnul și uleiul, nimic altceva.',
+				'Three coats of wood oil, 24 hours between, cut back with sandpaper. No stain, ever. That honey colour is the wood and the oil, nothing else.': 'Trei straturi de ulei pentru lemn, la 24 de ore distanță, șlefuite cu glaspapir. Niciodată baiț. Culoarea aceea de miere e lemnul și uleiul, nimic altceva.',
 
 				// 07 workshop
 				'The workshop': 'Atelierul',
 				'One bench,<br>one pair of hands.': 'Un banc de lucru,<br>o pereche de mâini.',
-				'The bench is outside, under a walnut, and it stays there until November. That is most of why these lamps look the way they do: the wood is found within a morning\'s walk of where it gets cut, and the first time a finished lamp is switched on, it is switched on in the yard.': 'Bancul de lucru e afară, sub un nuc, și stă acolo până în noiembrie. De aici vine mare parte din felul în care arată lămpile astea: lemnul e găsit la o dimineață de mers pe jos de locul unde e tăiat, iar prima dată când o lampă terminată e aprinsă, e aprinsă în curte.',
+				'The bench is outside, under a walnut. The first time a finished lamp is switched on, it is switched on in the yard.': 'Bancul de lucru e afară, sub un nuc. Prima dată când o lampă terminată e aprinsă, e aprinsă în curte.',
 				'I don\'t make series. Two lamps off the same tree will still be two different lamps, and if you ask me for a matching pair I\'ll tell you honestly which one to take. What you get is a signed piece, a written note of where every part of it came from, and someone who will rewire it for you in ten years.': 'Nu fac serii. Două lămpi din același copac tot două lămpi diferite vor fi, iar dacă îmi ceri o pereche asortată îți spun sincer pe care s-o iei. Primești o piesă semnată, o notă scrisă despre proveniența fiecărei părți și pe cineva care îți va reface instalația peste zece ani.',
 				'Working since': 'Lucrez din',
 				'Identical pieces made': 'Piese identice făcute',
@@ -3228,7 +3361,7 @@
 
 			// remember each element's English once, then swap from it in either direction
 			var textEls = Array.prototype.slice.call(document.querySelectorAll(
-				'main h1, main h2, main h3, main p, main li, main dt, main dd, main figcaption, main .btn, main .hint, main .stamp, main .cue, main .band, main .when, main .mono-xs, main .price, #lb-more'));
+				'main h1, main h2, main h3, main p, main li, main dt, main dd, main figcaption:not(#hero-tag), main .btn, main .hint, main .stamp, main .cue, main .band, main .when, main .mono-xs, main .price, #lb-more'));
 			textEls.forEach(function (el) { el._en = el.innerHTML.replace(/\s+/g, ' ').trim(); });
 			var ATTRS = ['alt', 'aria-label', 'data-label'];
 			var attrEls = Array.prototype.filter.call(document.querySelectorAll('[alt], [aria-label], [data-label]'), function (el) { return el.parentNode !== dots; });
@@ -3245,9 +3378,197 @@
 					b.setAttribute('aria-label', t('Go to ') + slides[i].dataset.label);
 				});
 				langBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.lang === l)); });
+				heroTag();
 				try { localStorage.setItem('lang', l); } catch (e) { }
 			}
 			langBtns.forEach(function (b) { b.addEventListener('click', function () { if (b.dataset.lang !== lang) setLang(b.dataset.lang); }); });
+			/* ---- the hero carousel: one lamp after another, a different photograph of it each time round ---- */
+			var hero = document.querySelector('.hero-photo'), heroBtn = hero.querySelector('.hero-open');
+			var heroTagEl = document.getElementById('hero-tag');
+			var HERO_KEYS = Object.keys(PIECES), HERO_MS = 3000;
+			var heroAt = { key: HERO_KEYS[0], i: 0 }, heroImg = heroBtn.querySelector('img'), heroNext = null;
+			var heroSeen = {}; HERO_KEYS.forEach(function (k) { heroSeen[k] = k === heroAt.key ? 1 : 0; });
+			var heroT = 0, heroLast = 0, heroRaf = 0, heroBusy = false, heroHover = false, heroFocus = false;
+			var heroOnScreen = !('IntersectionObserver' in window);
+
+			function heroTag() {
+				var p = PIECES[heroAt.key], ph = p.photos[heroAt.i];
+				heroTagEl.firstChild.textContent = t(p.name) + ' · ' + t(ph.title);
+				heroImg.alt = t(ph.alt);
+				heroBtn.setAttribute('aria-label', document.querySelector('.lot[data-piece="' + heroAt.key + '"] .stack').getAttribute('aria-label'));
+			}
+
+			// every photograph shown so far, so a drag back returns to what was actually there
+			var heroHist = [heroAt], heroPos = 0, heroBackSeen = {}, heroPending = false, heroFinish = null;
+
+			function heroLoad(k, i) {
+				var img = new Image();
+				img.alt = ''; img.decoding = 'async'; img.draggable = false; img.src = PIECES[k].photos[i].src;
+				return { key: k, i: i, img: img, ready: img.decode ? img.decode().catch(function () { }) : Promise.resolve() };
+			}
+
+			// load and decode the next photograph while the current one is on show
+			function heroPrep() {
+				var k = HERO_KEYS[(HERO_KEYS.indexOf(heroHist[heroHist.length - 1].key) + 1) % HERO_KEYS.length];
+				var i = heroSeen[k] % PIECES[k].photos.length;
+				heroSeen[k] = i + 1;
+				heroNext = heroLoad(k, i);
+			}
+
+			// the photograph one step away, and how to make that step count once it is taken
+			function heroTarget(dir) {
+				if (dir > 0) {
+					if (heroPos < heroHist.length - 1) return { n: heroLoad(heroHist[heroPos + 1].key, heroHist[heroPos + 1].i), commit: function () { heroPos++; } };
+					var n = heroNext;
+					return { n: n, commit: function () { heroHist.push({ key: n.key, i: n.i }); heroPos++; heroPrep(); } };
+				}
+				if (heroPos > 0) return { n: heroLoad(heroHist[heroPos - 1].key, heroHist[heroPos - 1].i), commit: function () { heroPos--; } };
+				// back past the first one: the piece before it, a photograph not yet shown this way
+				var k = HERO_KEYS[(HERO_KEYS.indexOf(heroAt.key) + HERO_KEYS.length - 1) % HERO_KEYS.length];
+				var len = PIECES[k].photos.length, b = heroBackSeen[k] || 0, m = heroLoad(k, len - 1 - b % len);
+				return { n: m, commit: function () { heroBackSeen[k] = b + 1; heroHist.unshift({ key: m.key, i: m.i }); } };
+			}
+
+			function heroSwap() {
+				var tg = heroTarget(1), n = tg.n, old = heroImg;
+				tg.commit();
+				heroBusy = true; heroPending = true;
+				n.ready.then(function () {
+					heroPending = false;
+					n.img.className = 'entering';
+					heroBtn.appendChild(n.img);
+					void n.img.offsetWidth;
+					n.img.classList.add('go');
+					old.alt = ''; old.classList.add('leaving');
+					heroTagEl.classList.add('swap');
+					heroAt = { key: n.key, i: n.i }; heroImg = n.img;
+					heroT = 0;
+					var t1 = setTimeout(function () { heroTag(); heroTagEl.classList.remove('swap'); }, 450);
+					// the count to the next one starts once the blind has fully crossed
+					var t2 = setTimeout(function () { heroBusy = false; }, 1300);
+					var t3 = setTimeout(function () { heroFinish(); }, 2200);
+					// a drag that arrives mid-wipe skips straight to the end of it
+					heroFinish = function () {
+						clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+						heroTag(); heroTagEl.classList.remove('swap');
+						if (old.parentNode) old.parentNode.removeChild(old);
+						n.img.className = '';
+						heroBusy = false; heroFinish = null;
+					};
+				});
+			}
+
+			function heroPlaying() { return heroOnScreen && !heroHover && !heroFocus && !lbOpen; }
+			function heroRun() { if (heroPlaying() && !heroRaf) { heroLast = 0; heroRaf = requestAnimationFrame(heroTick); } }
+			function heroTick(now) {
+				heroRaf = 0;
+				if (!heroPlaying()) return;
+				if (heroLast && !heroBusy) heroT += Math.min(now - heroLast, 100);
+				heroLast = now;
+				if (heroT >= HERO_MS && !heroBusy) heroSwap();
+				heroRaf = requestAnimationFrame(heroTick);
+			}
+
+			hero.addEventListener('mouseenter', function () { heroHover = true; });
+			hero.addEventListener('mouseleave', function () { heroHover = false; heroRun(); });
+			// tabbing onto the photograph holds it still; focus handed back by the deck or left by a click does not
+			var heroTab = false;
+			document.addEventListener('keydown', function (e) { heroTab = e.key === 'Tab'; });
+			document.addEventListener('mousedown', function () { heroTab = false; });
+			heroBtn.addEventListener('focus', function () { heroFocus = heroTab; });
+			heroBtn.addEventListener('blur', function () { heroFocus = false; heroRun(); });
+			// drag sideways to leaf through: the photograph follows the hand and the next one slides in beside it
+			var heroDrag = null, heroDragged = false, HERO_SNAP = 'transform .32s cubic-bezier(.2, .8, .2, 1)';
+			heroImg.draggable = false;
+			function heroPeekDrop(d) {
+				if (!d.n) return;
+				if (d.n.img.parentNode) d.n.img.parentNode.removeChild(d.n.img);
+				d.n.img.style.transition = ''; d.n.img.style.transform = '';
+			}
+			heroBtn.addEventListener('pointerdown', function (e) {
+				if (e.button !== 0) return;
+				heroDragged = false;
+				heroDrag = { x: e.clientX, y: e.clientY, dx: 0, moved: false, lastX: e.clientX, lastT: performance.now(), v: 0, dir: 0 };
+			});
+			heroBtn.addEventListener('pointermove', function (e) {
+				var d = heroDrag;
+				if (!d) return;
+				var dx = e.clientX - d.x, now = performance.now();
+				if (!d.moved) {
+					if (Math.abs(dx) < 6) return;
+					if (Math.abs(e.clientY - d.y) > Math.abs(dx) || heroPending) { heroDrag = null; return; }
+					if (heroFinish) heroFinish();
+					d.moved = true; heroBusy = true;
+					d.w = heroBtn.clientWidth; d.cur = heroImg;
+					d.cur.style.transition = 'none';
+					heroBtn.setPointerCapture(e.pointerId);
+					heroBtn.classList.add('dragging');
+				}
+				var dir = dx < 0 ? 1 : -1;
+				if (dir !== d.dir) {
+					heroPeekDrop(d);
+					d.dir = dir; d.t = heroTarget(dir); d.n = d.t.n;
+					d.n.img.className = ''; d.n.img.style.transition = 'none';
+					heroBtn.appendChild(d.n.img);
+				}
+				d.v = (e.clientX - d.lastX) / Math.max(1, now - d.lastT);
+				d.lastX = e.clientX; d.lastT = now; d.dx = dx;
+				d.cur.style.transform = 'translateX(' + dx + 'px)';
+				d.n.img.style.transform = 'translateX(' + (dx + dir * d.w) + 'px)';
+			});
+			function heroEndDrag() {
+				var d = heroDrag;
+				heroDrag = null;
+				if (!d || !d.moved) return;
+				heroDragged = true;
+				heroBtn.classList.remove('dragging');
+				var flick = Math.abs(d.v) > 0.3 ? (d.v * d.dx > 0 ? 1 : -1) : 0;
+				var go = flick === 1 || (flick === 0 && Math.abs(d.dx) > d.w * 0.2);
+				var cur = d.cur, nimg = d.n.img, tm;
+				cur.style.transition = nimg.style.transition = HERO_SNAP;
+				if (go) {
+					cur.style.transform = 'translateX(' + (-d.dir * d.w) + 'px)';
+					nimg.style.transform = 'translateX(0px)';
+					d.t.commit();
+					cur.alt = '';
+					heroAt = { key: d.n.key, i: d.n.i }; heroImg = nimg;
+					heroTag();
+					heroT = 0;
+					heroFinish = function () {
+						clearTimeout(tm);
+						if (cur.parentNode) cur.parentNode.removeChild(cur);
+						cur.style.transition = cur.style.transform = '';
+						nimg.style.transition = nimg.style.transform = '';
+						heroBusy = false; heroFinish = null;
+					};
+				} else {
+					cur.style.transform = 'translateX(0px)';
+					nimg.style.transform = 'translateX(' + (d.dir * d.w) + 'px)';
+					heroFinish = function () {
+						clearTimeout(tm);
+						heroPeekDrop(d);
+						cur.style.transition = cur.style.transform = '';
+						heroBusy = false; heroFinish = null;
+					};
+				}
+				tm = setTimeout(heroFinish, 330);
+			}
+			heroBtn.addEventListener('pointerup', heroEndDrag);
+			heroBtn.addEventListener('pointercancel', heroEndDrag);
+			heroBtn.addEventListener('dragstart', function (e) { e.preventDefault(); });
+			heroBtn.addEventListener('click', function (e) {
+				if (heroDragged) { heroDragged = false; e.preventDefault(); return; }
+				openDeck(document.querySelector('.lot[data-piece="' + heroAt.key + '"]'), heroBtn, heroAt.i);
+			});
+			document.addEventListener('visibilitychange', function () { heroLast = 0; });
+			// stop when the hero is scrolled away, or hidden on a phone
+			if ('IntersectionObserver' in window) new IntersectionObserver(function (entries) {
+				heroOnScreen = entries[entries.length - 1].isIntersecting;
+				heroRun();
+			}).observe(hero);
+			heroPrep();
+			heroRun();
+
 			if (lang !== 'en') setLang(lang);
 
 			/* ---- reveal on scroll ---- */
@@ -3275,7 +3596,7 @@
 			if ('IntersectionObserver' in window && !reduce) {
 				rev = new IntersectionObserver(function (entries) {
 					entries.forEach(function (en) { if (en.isIntersecting) reveal(en.target); });
-				}, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+				}, window.matchMedia('(max-width:620px)').matches ? { rootMargin: '0px 0px -2% 0px', threshold: 0.02 } : { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
 				targets.forEach(function (t) { rev.observe(t); });
 			} else {
 				targets.forEach(function (t) { t.classList.add('in', 'settled'); });
